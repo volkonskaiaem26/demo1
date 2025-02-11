@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 
@@ -14,10 +15,9 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 320, 240);
+        Scene scene = new Scene(root, 1280, 960);
         stage.setTitle("Hello!");
         stage.setScene(scene);
-        stage.show();
         TextField text = new TextField();
         text.setPromptText("Enter element");
         Label label = new Label("_Element");
@@ -28,7 +28,7 @@ public class HelloApplication extends Application {
         button.setOnAction(event -> {
             System.out.println(text.getText());
         });
-
+        stage.show();
     }
 
     public static void main(String[] args) {
