@@ -28,6 +28,11 @@ public class HelloApplication extends Application {
         button.setOnAction(event -> {
             System.out.println(text.getText());
         });
+        Rectangle rect = new Rectangle(160, 120);
+        BorderPane pane = new BorderPane();
+        pane.setTop(rect);
+        Scene scene1 = new Scene(pane);
+        stage.setScene(scene1);
         stage.show();
     }
 
