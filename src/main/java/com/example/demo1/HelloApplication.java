@@ -19,6 +19,10 @@ public class HelloApplication extends Application {
         TextField textField = new TextField();
         textField.setPrefColumnCount(11);
         Button btn = new Button("Start");
+        String text = textField.getText();
+        Eclass ec = new Eclass(text);
+        String a = ec.getA();
+        String b = ec.getB();
         btn.setOnAction(event -> lbl.setText("Products: " + textField.getText()));
         FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl);
         Scene scene = new Scene(root, 250, 200);
