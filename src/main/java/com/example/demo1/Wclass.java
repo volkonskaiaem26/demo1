@@ -8,8 +8,7 @@ public class Wclass {
         this.A =  A;
     }
 
-    public int WC(Wclass s){
-        String a = s.A;
+    public int WC(String a){
         int l = 4;
         if(a.contains("OH")){
             l = 3;

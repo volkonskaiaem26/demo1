@@ -23,7 +23,9 @@ public class HelloApplication extends Application {
         Eclass ec = new Eclass(text);
         String a = ec.getA();
         String b = ec.getB();
-        btn.setOnAction(event -> lbl.setText("Products: " + textField.getText()));
+        int k = WC(a);
+        int c = WC(b);
+        btn.setOnAction(event -> lbl.setText("Products: " + Reaction(a,b,k,c)));
         FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl);
         Scene scene = new Scene(root, 250, 200);
         stage.setScene(scene);
