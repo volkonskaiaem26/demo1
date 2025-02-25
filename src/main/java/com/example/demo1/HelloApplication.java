@@ -47,7 +47,11 @@ public class HelloApplication extends Application {
                     l = 1;
                 }else{
                     if(a.indexOf("H")==1){
-                        l = 2;
+                        if(a.contains("H2O")){
+                            l = 7;
+                        }else{
+                            l=2;
+                        }
                     }else{
                         l = 5;
                     }
@@ -335,7 +339,7 @@ public class HelloApplication extends Application {
         return product;
     }
 
-    public int valmeo(String A){
+    public int valmeo(String A){ // определение валентностей металлов в оскидах(возможо это для чего то нужно...)
         int n = A.indexOf("O");
         int v =1;
         if((int) A.charAt(n-1) >=48 && (int) A.charAt(n-1)<=57){
