@@ -225,7 +225,17 @@ public class Main {
                 }
             }
         }else{
-            product += "реакция не идет";
+            if(k == 6){
+                int n = A.indexOf("O");
+                String a2 = "";
+                for(int i = 0; i<n; i++){
+                    a2 += A.charAt(i);
+                }
+                product += a2;
+                product += "+H2O";
+            }else{
+                product += "реакция не идет";
+            }
         }
         return product;
     }
