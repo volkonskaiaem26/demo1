@@ -5,7 +5,7 @@ public class Eclass {
     String B;
 
     Eclass(String text){
-        String[] s1 = text.split("+");
+        String[] s1 = text.split("\\+");
         this.A=s1[0];
         this.B=s1[1];
     }

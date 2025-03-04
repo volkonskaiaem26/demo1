@@ -1,6 +1,7 @@
 package com.example.demo1;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,19 +14,22 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
     @Override
     public void start(Stage stage) throws IOException { //создание окна программы
         Label lbl = new Label();
         TextField textField = new TextField();
         textField.setPrefColumnCount(11);
         Button btn = new Button("Start");
-        String text = textField.getText();
-        Eclass ec = new Eclass(text);
-        String a = ec.getA();
-        String b = ec.getB();
-        int k = WC(a);
-        int c = WC(b);
-        btn.setOnAction(event -> lbl.setText("Products: " + Reaction(a,b,k,c)));
+        btn.setOnAction(event -> {
+            String text = textField.getText();
+            Eclass ec = new Eclass(text);
+            String a = ec.getA();
+            String b = ec.getB();
+            int k = WC(a);
+            int c = WC(b);
+            lbl.setText("Products: " + Reaction(a, b, k, c));
+        });
         FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl);
         Scene scene = new Scene(root, 250, 200);
         stage.setScene(scene);
@@ -91,14 +95,20 @@ public class HelloApplication extends Application {
             k = 1;
         }else{
             if(a==2){
-                int h = (int) A.charAt(1) - 48;
+                int h = 1;
+                if((int) A.charAt(1)>=48 && (int) A.charAt(1) <=57) {
+                    h = (int) A.charAt(1) - 48;
+                }
                 ion1 += h +"H";
                 for(int i=2;i<A.length();i++){
                     ion2 += A.charAt(i);
                 }
             }else{
                 if(a==3){
-                    int h1 = (int) A.charAt(A.length()-1) - 48;
+                    int h1 = 1;
+                    if((int) A.charAt(A.length()-1)>=48 && (int) A.charAt(A.length()-1) <=57) {
+                        h1 = (int) A.charAt(A.length()-1) - 48;
+                    }
                     ion2 += h1 + "OH";
                     if(A.contains(")")){
                         int c = A.indexOf("(");
@@ -163,7 +173,7 @@ public class HelloApplication extends Application {
                 Bp += Va;
             }
             product1 += Bp + Ap;
-            product2 += "H2O";
+            product2 += "+H2O";
         } else {
             if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
                 String[] Ai = ionsB.split(";");
@@ -205,14 +215,12 @@ public class HelloApplication extends Application {
             } else {
                 if (k == 1) { // реакция для водорода и кислорода
                     if (A.contains("H2")) { // водород
-                        int l = ReagH(B);
-                        String cs = ReactH(B, l);
+                        String cs = ReactH(B, c);
                         product1 += cs;
                         r = 1;
                     }else{
                         if (A.contains("O2")) { // кислород
-                            int l = ReagO(A);
-                            String cs = ReactO(A, l);
+                            String cs = ReactO(B, k);
                             product1 += cs;
                             r = 1;
                         }
@@ -220,14 +228,12 @@ public class HelloApplication extends Application {
                 } else {
                     if (c == 1) {
                         if (B.contains("H2")) { // аналогично для другого
-                            int l = ReagH(A);
-                            String cs = ReactH(A, l);
+                            String cs = ReactH(A, k);
                             product1 += cs;
                             r = 1;
                         } else {
                             if (B.contains("O2")) { // аналогично для другого
-                                int l = ReagO(A);
-                                String cs = ReactO(A, l);
+                                String cs = ReactO(A, k);
                                 product1 += cs;
                                 r = 1;
                             }
@@ -250,21 +256,21 @@ public class HelloApplication extends Application {
             if (A.contains("S")) {
                 l = 3;
             } else {
-                if (A.contains("N")) {
-                    l = 4;
-                } else {
                     if (A.contains("C")) {
                         l = 5;
                     }
                 }
-            }
-        } else {
+            } else {
             if (A.contains("2")) {
                 if (A.contains("O")) {
                     l = 6;
                 } else {
                     if (A.contains("F") && A.contains("Cl") && A.contains("Br") && A.contains("I")) {
                         l = 7;
+                    } else{
+                        if (A.contains("N")) {
+                            l = 4;
+                        }
                     }
                 }
             } else {
