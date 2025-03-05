@@ -3,10 +3,13 @@ package com.example.demo1;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 
@@ -30,7 +33,11 @@ public class HelloApplication extends Application {
             int c = WC(b);
             lbl.setText("Products: " + Reaction(a, b, k, c));
         });
-        FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl);
+        Rectangle rectangle = new Rectangle(60.0d, 120.0d);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
+        Group group = new Group(rectangle);
+        FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl, group);
         Scene scene = new Scene(root, 250, 200);
         stage.setScene(scene);
         stage.setTitle("Chemistry");
@@ -85,14 +92,12 @@ public class HelloApplication extends Application {
         return l;
     }
 
-    public String getIons(String A, int a){ // разделение вещества на ионы (пока лишь для простых веществ, кислот и оснований.
+    public String getIons(String A, int a){ // разделение вещества на ионы (пока лишь для простых веществ, кислот и оснований).
         String ion1 = "";
         String ion2 = "";
         String ions = "";
-        int k = 0;
         if(a==1){
             ion1 += A;
-            k = 1;
         }else{
             if(a==2){
                 int h = 1;
@@ -125,7 +130,7 @@ public class HelloApplication extends Application {
             }
         }
         ions += ion1;
-        if(k==1){
+        if(a!=1){
             ions += ";";
             ions += ion2;
         }
@@ -134,8 +139,8 @@ public class HelloApplication extends Application {
     public String Reaction(String A, String B, int k, int c) {
         String product1 = "";
         String product2 = "";
-        String ionsA = String.valueOf(getIons(A, k));
-        String ionsB = String.valueOf(getIons(B, c));
+        String ionsA = getIons(A, k);
+        String ionsB = getIons(B, c);
         int r = 0;
         if (k == 2 && c == 3) { // соль+кислота реакция нейтрализации
             String[] Ai = ionsA.split(";");
@@ -172,8 +177,8 @@ public class HelloApplication extends Application {
             if (Va != 1) {
                 Bp += Va;
             }
-            product1 += Bp + Ap;
-            product2 += "+H2O";
+            product1 += Bp+Ap;
+            product2 += "H2O";
         } else {
             if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
                 String[] Ai = ionsB.split(";");
@@ -265,7 +270,7 @@ public class HelloApplication extends Application {
                 if (A.contains("O")) {
                     l = 6;
                 } else {
-                    if (A.contains("F") && A.contains("Cl") && A.contains("Br") && A.contains("I")) {
+                    if (A.contains("F") || A.contains("Cl") || A.contains("Br") || A.contains("I")) {
                         l = 7;
                     } else{
                         if (A.contains("N")) {
@@ -274,10 +279,10 @@ public class HelloApplication extends Application {
                     }
                 }
             } else {
-                if (A.contains("Ca") && A.contains("Sr") && A.contains("Ba") && A.contains("Ra")) {
+                if (A.contains("Ca") || A.contains("Sr") || A.contains("Ba") || A.contains("Ra")) {
                     l = 2;
                 } else {
-                    if (A.contains("Na") && A.contains("K") && A.contains("Li") && A.contains("Rb") && A.contains("Cs") && A.contains("Fr")) {
+                    if (A.contains("Na") || A.contains("K") || A.contains("Li") || A.contains("Rb") || A.contains("Cs") || A.contains("Fr")) {
                         l = 1;
                     }
                 }
@@ -345,25 +350,6 @@ public class HelloApplication extends Application {
         return product;
     }
 
-    public int valmeo(String A){ // определение валентностей металлов в оскидах(возможо это для чего то нужно...)
-        int n = A.indexOf("O");
-        int v =1;
-        if((int) A.charAt(n-1) >=48 && (int) A.charAt(n-1)<=57){
-            v = (int) A.charAt(n-1) -48;
-            v = v/2;
-            if((int) A.charAt(A.length()-1) >=48 && (int) A.charAt(A.length()-1)<=57){
-                int o = (int) A.charAt(A.length()-1) - 48;
-                v *= o;
-            }
-        }else{
-            v = 2;
-            if((int) A.charAt(A.length()-1) >=48 && (int) A.charAt(A.length()-1)<=57){
-                int o = (int) A.charAt(A.length()-1) - 48;
-                v *= o;
-            }
-        }
-        return v;
-    }
     public int ReagO(String A){
         int l = 0;
         if (A.length() == 1) {
