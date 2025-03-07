@@ -35,44 +35,7 @@ public class HelloApplication extends Application {
             int k = WC(a);
             int c = WC(b);
             String st = "";
-            if (k == 2 && c == 3) {// соль+кислота реакция нейтрализации
-                String stn1 = Neitralization(a, b);
-                st += stn1;
-            } else {
-                if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
-                    String stn2 = Neitralization(b, a);
-                    st += stn2;
-                } else {
-                    if (k == 1) { // реакция для водорода и кислорода
-                        if (a.contains("H2")) { // водород
-                            String cs = ReactH(b, c);
-                            st += cs;
-                        } else {
-                            if (a.contains("O2")) { // кислород
-                                String cs = ReactO(b, k);
-                                st += cs;
-                            }
-                        }
-                    } else {
-                        if (c == 1) {
-                            if (b.contains("H2")) { // аналогично для другого
-                                String cs = ReactH(a, k);
-                                st += cs;
-                            } else {
-                                if (b.contains("O2")) { // аналогично для другого
-                                    String cs = ReactO(a, k);
-                                    st += cs;
-                                }
-                            }
-                        } else {
-                            if (k == 4 && c == 4) {
-                                String result = sreaction(a, b);
-                                st += result;
-                            }
-                        }
-                    }
-                }
-            }
+            st += reaction(a,b,k,c);
             if (st.contains("Ag1(Cl)1")) {
                 rectangle.setFill(Color.LIGHTGOLDENRODYELLOW);
             }
@@ -87,6 +50,49 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public String reaction(String a,String b, int k,int c){
+        String st = "";
+        if (k == 2 && c == 3) {// соль+кислота реакция нейтрализации
+            String stn1 = Neitralization(a, b);
+            st += stn1;
+        } else {
+            if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
+                String stn2 = Neitralization(b, a);
+                st += stn2;
+            } else {
+                if (k == 1) { // реакция для водорода и кислорода
+                    if (a.contains("H2")) { // водород
+                        String cs = ReactH(b, c);
+                        st += cs;
+                    } else {
+                        if (a.contains("O2")) { // кислород
+                            String cs = ReactO(b, k);
+                            st += cs;
+                        }
+                    }
+                } else {
+                    if (c == 1) {
+                        if (b.contains("H2")) { // аналогично для другого
+                            String cs = ReactH(a, k);
+                            st += cs;
+                        } else {
+                            if (b.contains("O2")) { // аналогично для другого
+                                String cs = ReactO(a, k);
+                                st += cs;
+                            }
+                        }
+                    } else {
+                        if (k == 4 && c == 4) {
+                            String result = sreaction(a, b);
+                            st += result;
+                        }
+                    }
+                }
+            }
+        }
+        return st;
     }
 
     public int WC(String a) {    // определение класса вещества
