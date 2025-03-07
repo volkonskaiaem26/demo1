@@ -1,7 +1,6 @@
 package com.example.demo1;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -24,6 +23,10 @@ public class HelloApplication extends Application {
         TextField textField = new TextField();
         textField.setPrefColumnCount(11);
         Button btn = new Button("Start");
+        Rectangle rectangle = new Rectangle(60.0d, 120.0d);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
+        Group group = new Group(rectangle);
         btn.setOnAction(event -> {
             String text = textField.getText();
             Eclass ec = new Eclass(text);
@@ -31,12 +34,50 @@ public class HelloApplication extends Application {
             String b = ec.getB();
             int k = WC(a);
             int c = WC(b);
-            lbl.setText("Products: " + Reaction(a, b, k, c));
+            String st = "";
+            if (k == 2 && c == 3) {// соль+кислота реакция нейтрализации
+                String stn1 = Neitralization(a,b);
+                st += stn1;
+            } else {
+                if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
+                    String stn2 = Neitralization(b,a);
+                    st += stn2;
+                } else {
+                    if (k == 1) { // реакция для водорода и кислорода
+                        if (a.contains("H2")) { // водород
+                            String cs = ReactH(b, c);
+                            st += cs;
+                        }else{
+                            if (a.contains("O2")) { // кислород
+                                String cs = ReactO(b, k);
+                                st += cs;
+                            }
+                        }
+                    } else {
+                        if (c == 1) {
+                            if (b.contains("H2")) { // аналогично для другого
+                                String cs = ReactH(a, k);
+                                st += cs;
+                            } else {
+                                if (b.contains("O2")) { // аналогично для другого
+                                    String cs = ReactO(a, k);
+                                    st += cs;
+                                }
+                            }
+                        }else{
+                            if(k==4 && c==4){
+                                String result = sreaction(a, b);
+                                st += result;
+                            }
+                        }
+                    }
+                }
+            }
+            if(st.contains("Ag1(Cl)1")){
+                rectangle.setFill(Color.LIGHTGOLDENRODYELLOW);
+            }
+            lbl.setText("Products:"+st);
         });
-        Rectangle rectangle = new Rectangle(60.0d, 120.0d);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(Color.BLACK);
-        Group group = new Group(rectangle);
         FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl, group);
         Scene scene = new Scene(root, 250, 200);
         stage.setScene(scene);
@@ -54,10 +95,10 @@ public class HelloApplication extends Application {
             l = 3;
         }else{
             if(a.contains("H")){
-                if(a.length() == 2 && a.contains("2")){
+                if(a.contains("H2") && a.length()==2){
                     l = 1;
                 }else{
-                    if(a.indexOf("H")==1){
+                    if(a.indexOf("H")==0){
                         if(a.contains("H2O")){
                             l = 7;
                         }else{
@@ -72,7 +113,7 @@ public class HelloApplication extends Application {
                     l = 1;
                 }else{
                     if(a.length() == 2){
-                        if(a.contains("2") ||((int) a.charAt(1) <= 122 && (int) a.charAt(1)>=97)){
+                        if(a.contains("2") || ((int) a.charAt(1) <= 122 && (int) a.charAt(1)>=97)) {
                             l = 1;
                         }else{
                             if(!a.contains("O")){
@@ -83,6 +124,16 @@ public class HelloApplication extends Application {
                                 }else{
                                     l = 4;
                                 }
+                            }
+                        }
+                    }else{
+                        if(!a.contains("O")){
+                            l = 4;
+                        }else{
+                            if(a.indexOf("O")==a.length()-1){
+                                l = 6;
+                            }else{
+                                l = 4;
                             }
                         }
                     }
@@ -101,11 +152,13 @@ public class HelloApplication extends Application {
         }else{
             if(a==2){
                 int h = 1;
+                int k = 1;
                 if((int) A.charAt(1)>=48 && (int) A.charAt(1) <=57) {
                     h = (int) A.charAt(1) - 48;
+                    k = 2;
                 }
                 ion1 += h +"H";
-                for(int i=2;i<A.length();i++){
+                for(int i=k;i<A.length();i++){
                     ion2 += A.charAt(i);
                 }
             }else{
@@ -136,98 +189,70 @@ public class HelloApplication extends Application {
         }
         return ions;
     }
-    public String Reaction(String A, String B, int k, int c) {
+    public String Neitralization(String A,String B){
         String product1 = "";
         String product2 = "";
+        int k = 2;
+        int c = 3;
         String ionsA = getIons(A, k);
         String ionsB = getIons(B, c);
-        int r = 0;
-        if (k == 2 && c == 3) { // соль+кислота реакция нейтрализации
-            String[] Ai = ionsA.split(";");
-            String[] Bi = ionsB.split(";");
-            int Vk = (int) Bi[1].charAt(0) - 48;
-            int Va = (int) Ai[0].charAt(0) - 48;
-            if (Va % Vk == 0) {
-                Vk = 1;
-                Va = Va / Vk;
-            } else {
-                if (Vk % Va == 0) {
-                    Va = 1;
-                    Vk = Vk / Va;
-                }
+        String[] Ai = ionsA.split(";");
+        String[] Bi = ionsB.split(";");
+        int Vk = (int) Bi[1].charAt(0) - 48;
+        int Va = (int) Ai[0].charAt(0) - 48;
+        if (Va % Vk == 0) {
+            Vk = 1;
+            Va = Va / Vk;
+        } else {
+            if (Vk % Va == 0) {
+                Va = 1;
+                Vk = Vk / Va;
             }
-            String Ap = "";
-            if (Ai[1].length() == 1) {
+        }
+        String Ap = "";
+        if (Ai[1].length() == 1) {
+            Ap += Ai[1];
+            if (Vk != 1) {
+                Ap += Vk;
+            }
+        } else {
+            if (Vk != 1) {
+                Ap += "(";
                 Ap += Ai[1];
-                if (Vk != 1) {
-                    Ap += Vk;
-                }
+                Ap += ")";
+                Ap += Vk;
             } else {
-                if (Vk != 1) {
-                    Ap += "(";
-                    Ap += Ai[1];
-                    Ap += ")";
-                    Ap += Vk;
-                } else {
-                    Ap += Ai[1];
-                }
+                Ap += Ai[1];
             }
-            String Bp = "";
-            Bp += Bi[0];
-            if (Va != 1) {
-                Bp += Va;
-            }
-            product1 += Bp+Ap;
-            product2 += "H2O";
+        }
+        String Bp = "";
+        Bp += Bi[0];
+        if (Va != 1) {
+            Bp += Va;
+        }
+        product1 += Bp+Ap;
+        product2 += "H2O";
+        String product = product1+"+"+product2;
+        return product;
+    }
+    public String Reaction(String A, String B, int k, int c) {
+        String product1 = "";
+        if (k == 2 && c == 3) {// соль+кислота реакция нейтрализации
+            String stn1 = Neitralization(A,B);
+            product1 += stn1;
         } else {
             if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
-                String[] Ai = ionsB.split(";");
-                String[] Bi = ionsA.split(";");
-                int Vk = (int) Bi[1].charAt(0) - 48;
-                int Va = (int) Ai[0].charAt(0) - 48;
-                if (Va % Vk == 0) {
-                    Vk = 1;
-                    Va = Va / Vk;
-                } else {
-                    if (Vk % Va == 0) {
-                        Va = 1;
-                        Vk = Vk / Va;
-                    }
-                }
-                String Ap = "";
-                if (Ai[1].length() == 1) {
-                    Ap += Ai[1];
-                    if (Vk != 1) {
-                        Ap += Vk;
-                    }
-                } else {
-                    if (Vk != 1) {
-                        Ap += "(";
-                        Ap += Ai[1];
-                        Ap += ")";
-                        Ap += Vk;
-                    } else {
-                        Ap += Ai[1];
-                    }
-                }
-                String Bp = "";
-                Bp += Bi[0];
-                if (Va != 1) {
-                    Bp += Va;
-                }
-                product1 += Bp + Ap;
-                product2 += "H2O";
+                String stn2 = Neitralization(B,A);
+                product1 += stn2;
             } else {
                 if (k == 1) { // реакция для водорода и кислорода
                     if (A.contains("H2")) { // водород
                         String cs = ReactH(B, c);
                         product1 += cs;
-                        r = 1;
                     }else{
                         if (A.contains("O2")) { // кислород
                             String cs = ReactO(B, k);
                             product1 += cs;
-                            r = 1;
                         }
                     }
                 } else {
@@ -235,25 +260,22 @@ public class HelloApplication extends Application {
                         if (B.contains("H2")) { // аналогично для другого
                             String cs = ReactH(A, k);
                             product1 += cs;
-                            r = 1;
                         } else {
                             if (B.contains("O2")) { // аналогично для другого
                                 String cs = ReactO(A, k);
                                 product1 += cs;
-                                r = 1;
                             }
+                        }
+                    }else{
+                        if(k==4 && c==4){
+                            String result = sreaction(A, B);
+                            product1 += result;
                         }
                     }
                 }
             }
         }
-        String product = "";
-        product += product1;
-        if (r == 0) {
-            product += "+";
-            product += product2;
-        }
-        return product;
+        return product1;
     }
     public int ReagH(String A){ //определение более точной классификации вещества
         int l = 0;
@@ -382,7 +404,7 @@ public class HelloApplication extends Application {
         return l;
     }
 
-    public String ReactO(String A,int k){ // реакции для водорода
+    public String ReactO(String A,int k){ // реакции для кислорода
         String product = "";
         if(k==1){
             int l = ReagO(A);
@@ -428,4 +450,61 @@ public class HelloApplication extends Application {
         }
         return product;
     }
+    public String sreaction(String A, String B){
+        String product1 = "";
+        String product2 = "";
+        String [] kations = {"Li", "NH4", "K", "Na", "Ag", "Ba", "Ca", "Mg", "Zn", "Mn", "Cu", "Hg", "Pb", "Fe", "Al", "Cr", "Bi", "Sn", "Sr"};
+        String [] anions = {"NO3", "F", "Cl", "Br", "I", "S", "SO3", "SO4", "CO3", "SiO3", "PO4", "CrO4"};
+        int [][] table1 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0}, {0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,1,0,1}, {0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,2,0,0}, {0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,2,0,0}, {0,0,0,0,1,0,0,0,0,0,2,1,1,0,0,2,2,1,0}, {0,0,0,0,1,2,2,2,1,1,1,1,1,1,2,2,1,1,0}, {0,0,0,0,1,1,1,1,1,1,2,1,1,2,2,2,1,1,1}, {0,0,0,0,1,1,1,0,0,0,0,1,1,0,0,0,0,0,1}, {0,0,0,0,1,1,1,0,0,0,0,1,1,0,0,0,0,0,1}, {0,0,0,0,1,1,1,1,2,1,2,1,1,2,2,2,1,1,1}, {0,0,0,0,1,1,1,2,1,1,2,2,1,2,2,2,1,2,1}, {1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, {0,0,0,0,1,1,1,0,1,1,1,2,1,2,2,2,1,2,1}};
+        int [] katval = {1,1,1,1,1,2,2,2,2,2,2,2,2,2,3,3,3,2,2};
+        int [] anval = {1,1,1,1,1,2,2,2,2,2,3,2};
+        String kationA = "";
+        String anionA = "";
+        String kationB = "";
+        String anionB = "";
+        int kA = 0;
+        int aA = 0;
+        int kB = 0;
+        int aB = 0;
+        for(int i = 0; i<19; i++){
+            if(A.contains(kations[i])){
+                kA = i;
+            }
+            if(B.contains(kations[i])){
+                kB = i;
+            }
+        }
+        for(int i = 0; i<12; i++){
+            if(A.contains(anions[i])){
+                aA = i;
+            }
+            if(B.contains(anions[i])){
+                aB = i;
+            }
+        }
+        int ap = table1[aA][kB];
+        int bp = table1[aB][kA];
+        int r = 0;
+        if(ap+bp>0){
+            r = 1;
+        }
+        if(r==1){
+            kationA += kations[kA];
+            anionA += anions[aA];
+            kationB += kations[kB];
+            anionB += anions[aB];
+            int valkA = katval[kA];
+            int valaA = anval[aA];
+            int valkB = katval[kB];
+            int valaB = anval[aB];
+            product1 += kationA;
+            product1 += valaB;
+            product1 += "(" + anionB + ")" + valkA;
+            product2 += kationB;
+            product2 += valaA;
+            product2 += "(" + anionA + ")" + valkB;
+        }
+        return product1 + "+" + product2;
+    }
 }
+
