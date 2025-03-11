@@ -468,6 +468,7 @@ public class HelloApplication extends Application {
         int[][] table1 = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0}, {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 2, 2, 1, 0}, {0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1}, {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 1}};
         int[] katval = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 2, 2};
         int[] anval = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 2};
+        kations [] kat = {new kations("Li", 1),new kations("NH4", 1),new kations("K", 1),new kations("Na", 1),new kations("Ag", 1),new kations("Ba", 2),new kations("Ca", 2),new kations("Mg", 2),new kations("Zn", 2),new kations("Mn", 2),new kations("Cu", 2),new kations("Hg", 2),new kations("Pb", 2),new kations("Fe", 2),new kations("Al", 3),new kations("Cr", 3),new kations("Bi", 3),new kations("Sn", 2),new kations("Sr", 2)};
         String kationA = "";
         String anionA = "";
         String kationB = "";
@@ -476,11 +477,11 @@ public class HelloApplication extends Application {
         int aA = 0;
         int kB = 0;
         int aB = 0;
-        for (int i = 0; i < 19; i++) {
-            if (A.contains(kations[i])) {
+        for (int i = 0; i < kat.length; i++) {
+            if (A.contains(kat[i].kation)) {
                 kA = i;
             }
-            if (B.contains(kations[i])) {
+            if (B.contains(kat[i].kation)) {
                 kB = i;
             }
         }
@@ -517,22 +518,16 @@ public class HelloApplication extends Application {
         return product1 + "+" + product2;
     }
 
-    public int RColor(String A) {
-        String[] elements = {"CaO", "ZnO", "Al2O3", "Zn(OH)2", "Mg(OH)2", "Al(OH)3", "CaCO3", "BaCO3", "CaSO4", "BaSO4", "AgCl", "ZnS", "CaF2", "MnS", "Ag3PO4", "AgBr", "AgI", "Cr2O3", "Cr(OH)3", "Cu(OH)2", "HgS", "MnO2", "Fe2O3", "Fe(OH)3", "CuO", "Ag2O", "CuS", "Ag2S", "PbS"};
-        int[] colors = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7, 7, 8, 8, 8, 8, 8};
-        int k = 0;
-        int l = 0;
-        int x = 0;
-        for (int i = 0; i < 29; i++) {
-            if(A.contains(elements[i])){
-                l = 1;
-                x = i;
+    public int osColor(String A) {
+        Formula[] formulas = {new Formula("CaC03",1),new Formula("BaC03",1) ,new Formula("Mg03",1) ,new Formula("PbC03",1) ,new Formula("Ca3(PO4)2",1) ,new Formula("Mg3(PO4)2",1) ,new Formula("BaSO4",1) ,new Formula("Li3PO4",1) ,new Formula("Li2SiO3",1) ,new Formula("PbSO4",1) ,new Formula("ZnS",1) ,new Formula("AgCl",1) ,new Formula("PbCl2",1) ,new Formula("AgBr",2) ,new Formula("PbBr2",22) ,new Formula("Ag2CO3",2) ,new Formula("AgI",2) ,new Formula("PbI2",2) ,new Formula("Ag3PO4",2) ,new Formula("Cu(OH)2",3) ,new Formula("CuS",4) ,new Formula("Ag2S",4) ,new Formula("PbS",4) ,new Formula("Fe(OH)2",5) ,new Formula("Ag2O",6) ,new Formula("HgS",7),new Formula("MnS",8)  };
+        //String[] elements = {"CaCO3","BaCO3","MgCO3","PbCO3","Ca3(PO4)2","Ba3(PO4)2","Mg3(PO4)2","BaSO4","Li3PO4","PbSO4","ZnS","AgCl","Mg(OH)2","Zn(OH)2","Be(OH)2","Al(OH)3","AgBr","PbBr2","Ag2CO3","AgI","PbI2","Ag3PO4","Cu(OH)2","CuS","Ag2S","PbS","Fe(OH)2","HgS","MnS"};
+        //int[] colors = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3,4,4,4,5,6,7};
+        for (Formula formula : formulas) {
+            if (A.contains(formula.name)) {
+                return formula.color;
             }
         }
-        if(l==1){
-            k = colors[x];
-        }
-        return k;
+        return 0;
     }
 }
 
