@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
+
 public class HelloApplication extends Application {
 
     @Override
@@ -36,12 +37,42 @@ public class HelloApplication extends Application {
             int c = WC(b);
             String st = "";
             st += reaction(a,b,k,c);
-            if (st.contains("Ag1(Cl)1")) {
-                rectangle.setFill(Color.LIGHTGOLDENRODYELLOW);
+            int pr = osColor(st);
+            if(pr==1){
+                rectangle.setFill(Color.SNOW);
+            }else{
+                if(pr==2){
+                    rectangle.setFill(Color.KHAKI);
+                }else{
+                    if(pr==3){
+                        rectangle.setFill(Color.DODGERBLUE);
+                    }else{
+                        if(pr==4){
+                            rectangle.setFill(Color.DARKSLATEGREY);
+                        }else{
+                            if(pr==5){
+                                rectangle.setFill(Color.DARKGREEN);
+                            }else{
+                                if(pr==6){
+                                    rectangle.setFill(Color.MAROON);
+                                }else{
+                                    if(pr==7){
+                                        rectangle.setFill(Color.FIREBRICK);
+                                    }else{
+                                        if(pr==8){
+                                            rectangle.setFill(Color.BLANCHEDALMOND);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
             lbl.setText("Products:" + st);
         });
         FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl, group);
+        root.setStyle("-fx-background-color: AZURE");
         Scene scene = new Scene(root, 250, 200);
         stage.setScene(scene);
         stage.setTitle("Chemistry");
@@ -207,15 +238,9 @@ public class HelloApplication extends Application {
         String[] Bi = ionsB.split(";");
         int Vk = (int) Bi[1].charAt(0) - 48;
         int Va = (int) Ai[0].charAt(0) - 48;
-        if (Va % Vk == 0) {
-            Vk = 1;
-            Va = Va / Vk;
-        } else {
-            if (Vk % Va == 0) {
-                Va = 1;
-                Vk = Vk / Va;
-            }
-        }
+        Calcval p = new Calcval(Va,Vk);
+        Va = p.getA();
+        Vk = p.getB();
         String Ap = "";
         if (Ai[1].length() == 1) {
             Ap += Ai[1];
@@ -463,11 +488,9 @@ public class HelloApplication extends Application {
     public String sreaction(String A, String B) {
         String product1 = "";
         String product2 = "";
-        String[] kations = {"Li", "NH4", "K", "Na", "Ag", "Ba", "Ca", "Mg", "Zn", "Mn", "Cu", "Hg", "Pb", "Fe", "Al", "Cr", "Bi", "Sn", "Sr"};
-        String[] anions = {"NO3", "F", "Cl", "Br", "I", "S", "SO3", "SO4", "CO3", "SiO3", "PO4", "CrO4"};
+        String product = "";
         int[][] table1 = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0}, {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 2, 2, 1, 0}, {0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1}, {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 1}};
-        int[] katval = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 2, 2};
-        int[] anval = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 2};
+        Anions[] an = {new Anions("NO3", 1), new Anions("F", 1), new Anions("Cl", 1), new Anions("Br", 1), new Anions("I", 1), new Anions("SO3", 2),new Anions("SO4", 2),new Anions("CO3", 2),new Anions("SiO3", 2),new Anions("NO3", 1),new Anions("PO4", 3),new Anions("CrO4", 2)};
         kations [] kat = {new kations("Li", 1),new kations("NH4", 1),new kations("K", 1),new kations("Na", 1),new kations("Ag", 1),new kations("Ba", 2),new kations("Ca", 2),new kations("Mg", 2),new kations("Zn", 2),new kations("Mn", 2),new kations("Cu", 2),new kations("Hg", 2),new kations("Pb", 2),new kations("Fe", 2),new kations("Al", 3),new kations("Cr", 3),new kations("Bi", 3),new kations("Sn", 2),new kations("Sr", 2)};
         String kationA = "";
         String anionA = "";
@@ -485,11 +508,11 @@ public class HelloApplication extends Application {
                 kB = i;
             }
         }
-        for (int i = 0; i < 12; i++) {
-            if (A.contains(anions[i])) {
+        for (int i = 0; i < an.length; i++) {
+            if (A.contains(an[i].anion)) {
                 aA = i;
             }
-            if (B.contains(anions[i])) {
+            if (B.contains(an[i].anion)) {
                 aB = i;
             }
         }
@@ -500,26 +523,47 @@ public class HelloApplication extends Application {
             r = 1;
         }
         if (r == 1) {
-            kationA += kations[kA];
-            anionA += anions[aA];
-            kationB += kations[kB];
-            anionB += anions[aB];
-            int valkA = katval[kA];
-            int valaA = anval[aA];
-            int valkB = katval[kB];
-            int valaB = anval[aB];
+            kationA += kat[kA].kation;
+            anionA += an[aA].anion;
+            kationB += kat[kB].kation;
+            anionB += an[aB].anion;
+            int valkA = kat[kA].val;
+            int valaA = an[aA].val;
+            int valkB = kat[kB].val;
+            int valaB = an[aB].val;
             product1 += kationA;
-            product1 += valaB;
-            product1 += "(" + anionB + ")" + valkA;
+            Calcval p1 = new Calcval(valkA,valaB);
+            Calcval p2 = new Calcval(valkB,valaA);
+            valkA = p1.getA();
+            valaB = p1.getB();
+            valkB = p2.getA();
+            valaA = p2.getB();
+            if(valaB!=1) {
+                product1 += valaB;
+            }
+            if(valkA!=1) {
+                product1 += "(" + anionB + ")" + valkA;
+            }else{
+                product1 += anionB;
+            }
             product2 += kationB;
-            product2 += valaA;
-            product2 += "(" + anionA + ")" + valkB;
+            if(valaA!=1) {
+                product2 += valaA;
+            }
+            if(valkB!=1) {
+                product2 += "(" + anionA + ")" + valkB;
+            }else{
+                product2 += anionA;
+            }
+            product += product1 + "+" + product2;
+        }else{
+            product += "реакция не идет";
         }
-        return product1 + "+" + product2;
+        return product;
     }
 
     public int osColor(String A) {
-        Formula[] formulas = {new Formula("CaC03",1),new Formula("BaC03",1) ,new Formula("Mg03",1) ,new Formula("PbC03",1) ,new Formula("Ca3(PO4)2",1) ,new Formula("Mg3(PO4)2",1) ,new Formula("BaSO4",1) ,new Formula("Li3PO4",1) ,new Formula("Li2SiO3",1) ,new Formula("PbSO4",1) ,new Formula("ZnS",1) ,new Formula("AgCl",1) ,new Formula("PbCl2",1) ,new Formula("AgBr",2) ,new Formula("PbBr2",22) ,new Formula("Ag2CO3",2) ,new Formula("AgI",2) ,new Formula("PbI2",2) ,new Formula("Ag3PO4",2) ,new Formula("Cu(OH)2",3) ,new Formula("CuS",4) ,new Formula("Ag2S",4) ,new Formula("PbS",4) ,new Formula("Fe(OH)2",5) ,new Formula("Ag2O",6) ,new Formula("HgS",7),new Formula("MnS",8)  };
+        Formula[] formulas = {new Formula("CaC03",1),new Formula("BaC03",1) ,new Formula("Mg03",1) ,new Formula("PbC03",1) ,new Formula("Ca3(PO4)2",1) ,new Formula("Mg3(PO4)2",1) ,new Formula("BaSO4",1) ,new Formula("Li3PO4",1) ,new Formula("Li2SiO3",1) ,new Formula("PbSO4",1) ,new Formula("ZnS",1) ,new Formula("AgCl",1) ,new Formula("PbCl2",1) ,new Formula("AgBr",2) ,new Formula("PbBr2",2) ,new Formula("Ag2CO3",2) ,new Formula("AgI",2) ,new Formula("PbI2",2) ,new Formula("Ag3PO4",2) ,new Formula("Cu(OH)2",3) ,new Formula("CuS",4) ,new Formula("Ag2S",4) ,new Formula("PbS",4) ,new Formula("Fe(OH)2",5) ,new Formula("Ag2O",6) ,new Formula("HgS",7),new Formula("MnS",8)  };
         //String[] elements = {"CaCO3","BaCO3","MgCO3","PbCO3","Ca3(PO4)2","Ba3(PO4)2","Mg3(PO4)2","BaSO4","Li3PO4","PbSO4","ZnS","AgCl","Mg(OH)2","Zn(OH)2","Be(OH)2","Al(OH)3","AgBr","PbBr2","Ag2CO3","AgI","PbI2","Ag3PO4","Cu(OH)2","CuS","Ag2S","PbS","Fe(OH)2","HgS","MnS"};
         //int[] colors = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3,4,4,4,5,6,7};
         for (Formula formula : formulas) {
