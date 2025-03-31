@@ -1,12 +1,11 @@
 package com.example.demo1;
 
 import javafx.application.Application;
-import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -21,13 +20,33 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException { //создание окна программы
         Label lbl = new Label();
+        lbl.setLayoutY(300.0);
+        lbl.setLayoutX(180.0);
         TextField textField = new TextField();
-        textField.setPrefColumnCount(11);
+        textField.setPrefColumnCount(25);
+        textField.setLayoutY(20.0);
+        textField.setLayoutX(0.0);
         Button btn = new Button("Start");
+        btn.setLayoutY(60.0);
+        btn.setLayoutX(90.0);
         Rectangle rectangle = new Rectangle(60.0d, 120.0d);
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
         Group group = new Group(rectangle);
+        group.setLayoutY(150.0);
+        group.setLayoutX(200.0);
+        Rectangle rectangle1 = new Rectangle(59.5d, 60.0d);
+        rectangle1.setFill(Color.TRANSPARENT);
+        rectangle1.setStroke(Color.TRANSPARENT);
+        Group group1 = new Group(rectangle1);
+        group1.setLayoutY(150.0);
+        group1.setLayoutX(200.0);
+        Rectangle rectangle2 = new Rectangle(59.5d, 60.0d);
+        rectangle2.setFill(Color.TRANSPARENT);
+        rectangle2.setStroke(Color.TRANSPARENT);
+        Group group2 = new Group(rectangle2);
+        group2.setLayoutY(210.0);
+        group2.setLayoutX(200.0);
         btn.setOnAction(event -> {
             String text = textField.getText();
             Eclass ec = new Eclass(text);
@@ -39,28 +58,28 @@ public class HelloApplication extends Application {
             st += reaction(a,b,k,c);
             int pr = osColor(st);
             if(pr==1){
-                rectangle.setFill(Color.SNOW);
+                rectangle2.setFill(Color.SNOW);
             }else{
                 if(pr==2){
-                    rectangle.setFill(Color.KHAKI);
+                    rectangle2.setFill(Color.KHAKI);
                 }else{
                     if(pr==3){
-                        rectangle.setFill(Color.DODGERBLUE);
+                        rectangle2.setFill(Color.DODGERBLUE);
                     }else{
                         if(pr==4){
-                            rectangle.setFill(Color.DARKSLATEGREY);
+                            rectangle2.setFill(Color.DARKSLATEGREY);
                         }else{
                             if(pr==5){
-                                rectangle.setFill(Color.DARKGREEN);
+                                rectangle2.setFill(Color.DARKGREEN);
                             }else{
                                 if(pr==6){
-                                    rectangle.setFill(Color.MAROON);
+                                    rectangle2.setFill(Color.MAROON);
                                 }else{
                                     if(pr==7){
-                                        rectangle.setFill(Color.FIREBRICK);
+                                        rectangle2.setFill(Color.FIREBRICK);
                                     }else{
                                         if(pr==8){
-                                            rectangle.setFill(Color.BLANCHEDALMOND);
+                                            rectangle2.setFill(Color.BLANCHEDALMOND);
                                         }
                                     }
                                 }
@@ -69,11 +88,11 @@ public class HelloApplication extends Application {
                     }
                 }
             }
-            lbl.setText("Products:" + st);
+            lbl.setText("Products: " + st);
         });
-        FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl, group);
+        Pane root = new Pane(textField, btn, lbl, group, group1, group2);
         root.setStyle("-fx-background-color: AZURE");
-        Scene scene = new Scene(root, 250, 200);
+        Scene scene = new Scene(root, 500, 400);
         stage.setScene(scene);
         stage.setTitle("Chemistry");
         stage.show();
