@@ -19,34 +19,34 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException { //создание окна программы
-        Label lbl = new Label();
+        Label lbl = new Label();//вывод
         lbl.setLayoutY(300.0);
         lbl.setLayoutX(180.0);
-        TextField textField = new TextField();
+        TextField textField = new TextField();//ввод
         textField.setPrefColumnCount(25);
         textField.setLayoutY(20.0);
-        textField.setLayoutX(0.0);
-        Button btn = new Button("Start");
+        textField.setLayoutX(100.0);
+        Button btn = new Button("Start");//начало работы
         btn.setLayoutY(60.0);
-        btn.setLayoutX(90.0);
-        Rectangle rectangle = new Rectangle(60.0d, 120.0d);
+        btn.setLayoutX(207.0);
+        Rectangle rectangle = new Rectangle(60.0d, 120.0d);//центральная колба
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
         Group group = new Group(rectangle);
         group.setLayoutY(150.0);
         group.setLayoutX(200.0);
-        Rectangle rectangle1 = new Rectangle(59.5d, 60.0d);
+        Rectangle rectangle1 = new Rectangle(58.0d, 59.0d);//верхняя половина(раствор)
         rectangle1.setFill(Color.TRANSPARENT);
         rectangle1.setStroke(Color.TRANSPARENT);
         Group group1 = new Group(rectangle1);
-        group1.setLayoutY(150.0);
-        group1.setLayoutX(200.0);
-        Rectangle rectangle2 = new Rectangle(59.5d, 60.0d);
+        group1.setLayoutY(151.0);
+        group1.setLayoutX(201.0);
+        Rectangle rectangle2 = new Rectangle(58.0d, 59.0d);//нижняя половина(осадок)
         rectangle2.setFill(Color.TRANSPARENT);
         rectangle2.setStroke(Color.TRANSPARENT);
         Group group2 = new Group(rectangle2);
         group2.setLayoutY(210.0);
-        group2.setLayoutX(200.0);
+        group2.setLayoutX(201.0);
         btn.setOnAction(event -> {
             String text = textField.getText();
             Eclass ec = new Eclass(text);
@@ -57,36 +57,15 @@ public class HelloApplication extends Application {
             String st = "";
             st += reaction(a,b,k,c);
             int pr = osColor(st);
-            if(pr==1){
-                rectangle2.setFill(Color.SNOW);
-            }else{
-                if(pr==2){
-                    rectangle2.setFill(Color.KHAKI);
-                }else{
-                    if(pr==3){
-                        rectangle2.setFill(Color.DODGERBLUE);
-                    }else{
-                        if(pr==4){
-                            rectangle2.setFill(Color.DARKSLATEGREY);
-                        }else{
-                            if(pr==5){
-                                rectangle2.setFill(Color.DARKGREEN);
-                            }else{
-                                if(pr==6){
-                                    rectangle2.setFill(Color.MAROON);
-                                }else{
-                                    if(pr==7){
-                                        rectangle2.setFill(Color.FIREBRICK);
-                                    }else{
-                                        if(pr==8){
-                                            rectangle2.setFill(Color.BLANCHEDALMOND);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            switch(pr){
+                case 1: rectangle2.setFill(Color.SNOW);
+                case 2: rectangle2.setFill(Color.KHAKI);
+                case 3: rectangle2.setFill(Color.DODGERBLUE);
+                case 4: rectangle2.setFill(Color.DARKSLATEGREY);
+                case 5: rectangle2.setFill(Color.DARKGREEN);
+                case 6: rectangle2.setFill(Color.MAROON);
+                case 7: rectangle2.setFill(Color.FIREBRICK);
+                case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
             }
             lbl.setText("Products: " + st);
         });
@@ -107,40 +86,28 @@ public class HelloApplication extends Application {
         if (k == 2 && c == 3) {// соль+кислота реакция нейтрализации
             String stn1 = Neitralization(a, b);
             st += stn1;
-        } else {
-            if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
+        } else if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
                 String stn2 = Neitralization(b, a);
                 st += stn2;
-            } else {
-                if (k == 1) { // реакция для водорода и кислорода
-                    if (a.contains("H2")) { // водород
-                        String cs = ReactH(b, c);
-                        st += cs;
-                    } else {
-                        if (a.contains("O2")) { // кислород
+        } else if (k == 1) { // реакция для водорода и кислорода
+            if (a.contains("H2")) { // водород
+                String cs = ReactH(b, c);
+                st += cs;
+            } else if (a.contains("O2")) { // кислород
                             String cs = ReactO(b, k);
                             st += cs;
                         }
-                    }
-                } else {
-                    if (c == 1) {
-                        if (b.contains("H2")) { // аналогично для другого
-                            String cs = ReactH(a, k);
-                            st += cs;
-                        } else {
-                            if (b.contains("O2")) { // аналогично для другого
+        } else if (c == 1) {
+            if (b.contains("H2")) { // аналогично для другого
+                String cs = ReactH(a, k);
+                st += cs;
+            } else if (b.contains("O2")) { // аналогично для другого
                                 String cs = ReactO(a, k);
                                 st += cs;
                             }
-                        }
-                    } else {
-                        if (k == 4 && c == 4) {
-                            String result = sreaction(a, b);
-                            st += result;
-                        }
-                    }
-                }
-            }
+        } else if (k == 4 && c == 4) {
+            String result = sreaction(a, b);
+            st += result;
         }
         return st;
     }
@@ -153,45 +120,33 @@ public class HelloApplication extends Application {
             if (a.contains("H")) {
                 if (a.contains("H2") && a.length() == 2) {
                     l = 1;
-                } else {
-                    if (a.indexOf("H") == 0) {
-                        if (a.contains("H2O")) {
-                            l = 7;
-                        } else {
-                            l = 2;
-                        }
+                } else if (a.indexOf("H") == 0) {
+                    if (a.contains("H2O")) {
+                        l = 7;
                     } else {
-                        l = 5;
+                        l = 2;
                     }
+                } else {
+                    l = 5;
                 }
             } else {
                 if (a.length() == 1) {
                     l = 1;
+                } else if (a.length() == 2) {
+                    if (a.contains("2") || ((int) a.charAt(1) <= 122 && (int) a.charAt(1) >= 97)) {
+                        l = 1;
+                    } else if (!a.contains("O")) {
+                        l = 4;
+                    } else if (a.indexOf("O") == a.length() - 1) {
+                        l = 6;
+                    }
                 } else {
-                    if (a.length() == 2) {
-                        if (a.contains("2") || ((int) a.charAt(1) <= 122 && (int) a.charAt(1) >= 97)) {
-                            l = 1;
-                        } else {
-                            if (!a.contains("O")) {
-                                l = 4;
-                            } else {
-                                if (a.indexOf("O") == a.length() - 1) {
-                                    l = 6;
-                                } else {
-                                    l = 4;
-                                }
-                            }
-                        }
+                    if (!a.contains("O")) {
+                        l = 4;
+                    } else if (a.indexOf("O") == a.length() - 1) {
+                        l = 6;
                     } else {
-                        if (!a.contains("O")) {
-                            l = 4;
-                        } else {
-                            if (a.indexOf("O") == a.length() - 1) {
-                                l = 6;
-                            } else {
-                                l = 4;
-                            }
-                        }
+                        l = 4;
                     }
                 }
             }
@@ -205,36 +160,32 @@ public class HelloApplication extends Application {
         String ions = "";
         if (a == 1) {
             ion1 += A;
-        } else {
-            if (a == 2) {
-                int h = 1;
-                int k = 1;
-                if ((int) A.charAt(1) >= 48 && (int) A.charAt(1) <= 57) {
-                    h = (int) A.charAt(1) - 48;
-                    k = 2;
-                }
-                ion1 += h + "H";
-                for (int i = k; i < A.length(); i++) {
-                    ion2 += A.charAt(i);
+        } else if (a == 2) {
+            int h = 1;
+            int k = 1;
+            if ((int) A.charAt(1) >= 48 && (int) A.charAt(1) <= 57) {
+                h = (int) A.charAt(1) - 48;
+                k = 2;
+            }
+            ion1 += h + "H";
+            for (int i = k; i < A.length(); i++) {
+                ion2 += A.charAt(i);
+            }
+        } else if (a == 3) {
+            int h1 = 1;
+            if ((int) A.charAt(A.length() - 1) >= 48 && (int) A.charAt(A.length() - 1) <= 57) {
+                h1 = (int) A.charAt(A.length() - 1) - 48;
+            }
+            ion2 += h1 + "OH";
+            if (A.contains(")")) {
+                int c = A.indexOf("(");
+                for (int i = 0; i < c; i++) {
+                    ion1 += A.charAt(i);
                 }
             } else {
-                if (a == 3) {
-                    int h1 = 1;
-                    if ((int) A.charAt(A.length() - 1) >= 48 && (int) A.charAt(A.length() - 1) <= 57) {
-                        h1 = (int) A.charAt(A.length() - 1) - 48;
-                    }
-                    ion2 += h1 + "OH";
-                    if (A.contains(")")) {
-                        int c = A.indexOf("(");
-                        for (int i = 0; i < c; i++) {
-                            ion1 += A.charAt(i);
-                        }
-                    } else {
-                        int c1 = A.indexOf("O");
-                        for (int i = 0; i < c1; i++) {
-                            ion1 += A.charAt(i);
-                        }
-                    }
+                int c1 = A.indexOf("O");
+                for (int i = 0; i < c1; i++) {
+                    ion1 += A.charAt(i);
                 }
             }
         }
@@ -287,49 +238,6 @@ public class HelloApplication extends Application {
         return product;
     }
 
-    public String Reaction(String A, String B, int k, int c) {
-        String product1 = "";
-        if (k == 2 && c == 3) {// соль+кислота реакция нейтрализации
-            String stn1 = Neitralization(A, B);
-            product1 += stn1;
-        } else {
-            if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
-                String stn2 = Neitralization(B, A);
-                product1 += stn2;
-            } else {
-                if (k == 1) { // реакция для водорода и кислорода
-                    if (A.contains("H2")) { // водород
-                        String cs = ReactH(B, c);
-                        product1 += cs;
-                    } else {
-                        if (A.contains("O2")) { // кислород
-                            String cs = ReactO(B, k);
-                            product1 += cs;
-                        }
-                    }
-                } else {
-                    if (c == 1) {
-                        if (B.contains("H2")) { // аналогично для другого
-                            String cs = ReactH(A, k);
-                            product1 += cs;
-                        } else {
-                            if (B.contains("O2")) { // аналогично для другого
-                                String cs = ReactO(A, k);
-                                product1 += cs;
-                            }
-                        }
-                    } else {
-                        if (k == 4 && c == 4) {
-                            String result = sreaction(A, B);
-                            product1 += result;
-                        }
-                    }
-                }
-            }
-        }
-        return product1;
-    }
-
     public int ReagH(String A) { //определение более точной классификации вещества
         int l = 0;
         if (A.length() == 1) {
@@ -371,46 +279,30 @@ public class HelloApplication extends Application {
         String product = "";
         if (k == 1) {
             int l = ReagH(A);
-            if (l == 0) {
-                product += "реакция не идет";
-            } else {
-                if (l == 1) {
+            switch(l){
+                case 0: product += "реакция не идет";
+                case 1: {
                     product += A;
                     product += "H";
-                } else {
-                    if (l == 2) {
-                        product += A;
-                        product += "H2";
-                    } else {
-                        if (l == 3) {
-                            product += "H2S";
-                        } else {
-                            if (l == 4) {
-                                product += "NH3";
-                            } else {
-                                if (l == 5) {
-                                    product += "CH4";
-                                } else {
-                                    if (l == 6) {
-                                        product += "H2O";
-                                    } else {
-                                        if (l == 7) {
-                                            String a1 = "";
-                                            for (int i = 0; i < (A.length() - 1); i++) {
-                                                a1 += A.charAt(i);
-                                            }
-                                            product += "H";
-                                            product += a1;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                }
+                case 2: {
+                    product += A;
+                    product += "H2";
+                }
+                case 3: product += "H2S";
+                case 4: product += "NH3";
+                case 5: product += "CH4";
+                case 6: product += "H2O";
+                case 7: {
+                    String a1 = "";
+                    for (int i = 0; i < (A.length() - 1); i++) {
+                        a1 += A.charAt(i);
                     }
+                    product += "H";
+                    product += a1;
                 }
             }
-        } else {
-            if (k == 6) {
+        } else if (k == 6) {
                 int n = A.indexOf("O");
                 String a2 = "";
                 for (int i = 0; i < n; i++) {
@@ -421,7 +313,6 @@ public class HelloApplication extends Application {
             } else {
                 product += "реакция не идет";
             }
-        }
         return product;
     }
 
@@ -461,41 +352,28 @@ public class HelloApplication extends Application {
         String product = "";
         if (k == 1) {
             int l = ReagO(A);
-            if (l == 0) {
-                product += "реакция не идет";
-            } else {
-                if (l == 1) {
+            switch (l) {
+                case 0:
+                    product += "реакция не идет";
+                case 1:
                     product += "OF2";
-                } else {
-                    if (l == 2) {
-                        product += "SO2";
-                    } else {
-                        if (l == 3) {
-                            product += "SiO2";
-                        } else {
-                            if (l == 4) {
-                                product += "P2O5";
-                            } else {
-                                if (l == 5) {
-                                    product += "NO";
-                                } else {
-                                    if (l == 6) {
-                                        product += "CO2";
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                case 2:
+                    product += "SO2";
+                case 3:
+                    product += "SiO2";
+                case 4:
+                    product += "P2O5";
+                case 5:
+                    product += "NO";
+                case 6:
+                    product += "CO2";
             }
-        } else {
+        }else {
             if (k == 5) {
                 if (A.contains("NH3")) {
                     product += "N2+H2O";
-                } else {
-                    if (A.contains("H2S")) {
+                } else if (A.contains("H2S")) {
                         product += "SO2+H2O";
-                    }
                 }
             } else {
                 product += "реакция не идет";
