@@ -52,8 +52,8 @@ public class HelloApplication extends Application {
             Eclass ec = new Eclass(text);
             String a = ec.getA();
             String b = ec.getB();
-            int k = WC(a);
-            int c = WC(b);
+            int k = getClass(a);
+            int c = getClass(b);
             String st = "";
             st += reaction(a,b,k,c);
             int pr = osColor(st);
@@ -112,71 +112,72 @@ public class HelloApplication extends Application {
         return st;
     }
 
-    public int WC(String a) {    // определение класса вещества
-        int l = 0;
+    public int getClass(String a) {    // определение класса вещества
+        int elClass = 0;
         if (a.contains("OH")) {
-            l = 3;
+            elClass = 3;
         } else {
             if (a.contains("H")) {
                 if (a.contains("H2") && a.length() == 2) {
-                    l = 1;
+                    elClass = 1;
                 } else if (a.indexOf("H") == 0) {
                     if (a.contains("H2O")) {
-                        l = 7;
+                        elClass = 7;
                     } else {
-                        l = 2;
+                        elClass = 2;
                     }
                 } else {
-                    l = 5;
+                    elClass = 5;
                 }
             } else {
                 if (a.length() == 1) {
-                    l = 1;
+                    elClass = 1;
                 } else if (a.length() == 2) {
                     if (a.contains("2") || ((int) a.charAt(1) <= 122 && (int) a.charAt(1) >= 97)) {
-                        l = 1;
+                        elClass = 1;
                     } else if (!a.contains("O")) {
-                        l = 4;
+                        elClass = 4;
                     } else if (a.indexOf("O") == a.length() - 1) {
-                        l = 6;
+                        elClass = 6;
                     }
                 } else {
                     if (!a.contains("O")) {
-                        l = 4;
+                        elClass = 4;
                     } else if (a.indexOf("O") == a.length() - 1) {
-                        l = 6;
+                        elClass = 6;
                     } else {
-                        l = 4;
+                        elClass = 4;
                     }
                 }
             }
         }
-        return l;
+        return elClass;
     }
 
-    public String getIons(String A, int a) { // разделение вещества на ионы (пока лишь для простых веществ, кислот и оснований).
+    public String getIons(String A) { // разделение вещества на ионы (пока лишь для простых веществ, кислот и оснований).
+        int elClass = getClass(A);
         String ion1 = "";
         String ion2 = "";
         String ions = "";
-        if (a == 1) {
+        if (elClass == 1) {
             ion1 += A;
-        } else if (a == 2) {
-            int h = 1;
-            int k = 1;
+        } else if (elClass == 2) {
+            int valOfAnion = 1;
+            int indexOfAnion = 1;
             if ((int) A.charAt(1) >= 48 && (int) A.charAt(1) <= 57) {
-                h = (int) A.charAt(1) - 48;
-                k = 2;
+                valOfAnion = (int) A.charAt(1) - 48;
+                indexOfAnion = 2;
             }
-            ion1 += h + "H";
-            for (int i = k; i < A.length(); i++) {
+            ion1 += valOfAnion + "H";
+            for (int i = indexOfAnion; i < A.length(); i++) {
                 ion2 += A.charAt(i);
             }
-        } else if (a == 3) {
-            int h1 = 1;
+        } else if (elClass == 3) {
+            int valOfKation = 1;
             if ((int) A.charAt(A.length() - 1) >= 48 && (int) A.charAt(A.length() - 1) <= 57) {
-                h1 = (int) A.charAt(A.length() - 1) - 48;
+                valOfKation = (int) A.charAt(A.length() - 1) - 48;
             }
-            ion2 += h1 + "OH";
+            ion2 += valOfKation + "OH";
             if (A.contains(")")) {
                 int c = A.indexOf("(");
                 for (int i = 0; i < c; i++) {
@@ -190,7 +191,7 @@ public class HelloApplication extends Application {
             }
         }
         ions += ion1;
-        if (a != 1) {
+        if (elClass != 1) {
             ions += ";";
             ions += ion2;
         }
@@ -200,22 +201,20 @@ public class HelloApplication extends Application {
     public String Neitralization(String A, String B) {
         String product1 = "";
         String product2 = "";
-        int k = 2;
-        int c = 3;
         String ionsA = getIons(A, k);
         String ionsB = getIons(B, c);
-        String[] Ai = ionsA.split(";");
-        String[] Bi = ionsB.split(";");
-        int Vk = (int) Bi[1].charAt(0) - 48;
-        int Va = (int) Ai[0].charAt(0) - 48;
-        Calcval p = new Calcval(Va,Vk);
-        Va = p.getA();
-        Vk = p.getB();
+        String[] AIons = ionsA.split(";");
+        String[] BIons = ionsB.split(";");
+        int valKat = (int) BIons[1].charAt(0) - 48;
+        int valAn = (int) AIons[0].charAt(0) - 48;
+        Calcval p = new Calcval(valAn,valKat);
+        valAn = p.getA();
+        valAn = p.getB();
         String Ap = "";
-        if (Ai[1].length() == 1) {
-            Ap += Ai[1];
-            if (Vk != 1) {
-                Ap += Vk;
+        if (AIons[1].length() == 1) {
+            AProducts += AIons[1];
+            if (valKat != 1) {
+                AProducts += Vk;
             }
         } else {
             if (Vk != 1) {
