@@ -214,24 +214,24 @@ public class HelloApplication extends Application {
         if (AIons[1].length() == 1) {
             AProducts += AIons[1];
             if (valKat != 1) {
-                AProducts += Vk;
+                AProducts += valKat;
             }
         } else {
-            if (Vk != 1) {
-                Ap += "(";
-                Ap += Ai[1];
-                Ap += ")";
-                Ap += Vk;
+            if (valKat != 1) {
+                AProducts += "(";
+                AProducts += AIons[1];
+                AProducts += ")";
+                AProducts += valKat;
             } else {
-                Ap += Ai[1];
+                AProducts += AIons[1];
             }
         }
-        String Bp = "";
-        Bp += Bi[0];
-        if (Va != 1) {
-            Bp += Va;
+        String BProducts = "";
+        BProducts += BIons[0];
+        if (valAn != 1) {
+            BProducts += valAn;
         }
-        product1 += Bp + Ap;
+        product1 += BProducts + AProducts;
         product2 += "H2O";
         String product = product1 + "+" + product2;
         return product;
