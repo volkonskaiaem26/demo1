@@ -22,31 +22,37 @@ public class HelloApplication extends Application {
         Label lbl = new Label();//вывод
         lbl.setLayoutY(300.0);
         lbl.setLayoutX(180.0);
+
         TextField textField = new TextField();//ввод
         textField.setPrefColumnCount(25);
         textField.setLayoutY(20.0);
         textField.setLayoutX(100.0);
+
         Button btn = new Button("Start");//начало работы
         btn.setLayoutY(60.0);
         btn.setLayoutX(207.0);
+
         Rectangle rectangle = new Rectangle(60.0d, 120.0d);//центральная колба
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
         Group group = new Group(rectangle);
         group.setLayoutY(150.0);
         group.setLayoutX(200.0);
+
         Rectangle rectangle1 = new Rectangle(58.0d, 59.0d);//верхняя половина(раствор)
         rectangle1.setFill(Color.TRANSPARENT);
         rectangle1.setStroke(Color.TRANSPARENT);
         Group group1 = new Group(rectangle1);
         group1.setLayoutY(151.0);
         group1.setLayoutX(201.0);
+
         Rectangle rectangle2 = new Rectangle(58.0d, 59.0d);//нижняя половина(осадок)
         rectangle2.setFill(Color.TRANSPARENT);
         rectangle2.setStroke(Color.TRANSPARENT);
         Group group2 = new Group(rectangle2);
         group2.setLayoutY(210.0);
         group2.setLayoutX(201.0);
+
         btn.setOnAction(event -> {
             String text = textField.getText();
             Eclass ec = new Eclass(text);
@@ -69,6 +75,7 @@ public class HelloApplication extends Application {
             }
             lbl.setText("Products: " + st);
         });
+
         Pane root = new Pane(textField, btn, lbl, group, group1, group2);
         root.setStyle("-fx-background-color: AZURE");
         Scene scene = new Scene(root, 500, 400);
@@ -81,7 +88,9 @@ public class HelloApplication extends Application {
         launch();
     }
 
-    public String reaction(String a,String b, int k,int c){
+    public String reaction(String a,String b){
+        int k = getClass(a);
+        int c = getClass(b)
         String st = "";
         if (k == 2 && c == 3) {// соль+кислота реакция нейтрализации
             String stn1 = Neitralization(a, b);
@@ -112,16 +121,16 @@ public class HelloApplication extends Application {
         return st;
     }
 
-    public int getClass(String a) {    // определение класса вещества
+    public int getClass(String A){    // определение класса вещества
         int elClass = 0;
-        if (a.contains("OH")) {
+        if (A.contains("OH")) {
             elClass = 3;
         } else {
             if (a.contains("H")) {
-                if (a.contains("H2") && a.length() == 2) {
+                if (A.contains("H2") && A.length() == 2) {
                     elClass = 1;
-                } else if (a.indexOf("H") == 0) {
-                    if (a.contains("H2O")) {
+                } else if (A.indexOf("H") == 0) {
+                    if (A.contains("H2O")) {
                         elClass = 7;
                     } else {
                         elClass = 2;
@@ -130,20 +139,20 @@ public class HelloApplication extends Application {
                     elClass = 5;
                 }
             } else {
-                if (a.length() == 1) {
+                if (A.length() == 1) {
                     elClass = 1;
-                } else if (a.length() == 2) {
-                    if (a.contains("2") || ((int) a.charAt(1) <= 122 && (int) a.charAt(1) >= 97)) {
+                } else if (A.length() == 2) {
+                    if (A.contains("2") || ((int) A.charAt(1) <= 122 && (int) A.charAt(1) >= 97)) {
                         elClass = 1;
-                    } else if (!a.contains("O")) {
+                    } else if (!A.contains("O")) {
                         elClass = 4;
-                    } else if (a.indexOf("O") == a.length() - 1) {
+                    } else if (A.indexOf("O") == A.length() - 1) {
                         elClass = 6;
                     }
                 } else {
-                    if (!a.contains("O")) {
+                    if (!A.contains("O")) {
                         elClass = 4;
-                    } else if (a.indexOf("O") == a.length() - 1) {
+                    } else if (A.indexOf("O") == A.length() - 1) {
                         elClass = 6;
                     } else {
                         elClass = 4;
@@ -238,47 +247,48 @@ public class HelloApplication extends Application {
     }
 
     public int ReagH(String A) { //определение более точной классификации вещества
-        int l = 0;
+        int typeReagent = 0;
         if (A.length() == 1) {
             if (A.contains("S")) {
-                l = 3;
+                typeReagent = 3;
             } else {
                 if (A.contains("C")) {
-                    l = 5;
+                    typeReagent = 5;
                 }
             }
         } else {
             if (A.contains("2")) {
                 if (A.contains("O")) {
-                    l = 6;
+                    typeReagent = 6;
                 } else {
                     if (A.contains("F") || A.contains("Cl") || A.contains("Br") || A.contains("I")) {
-                        l = 7;
+                        typeReagent = 7;
                     } else {
                         if (A.contains("N")) {
-                            l = 4;
+                            typeReagent = 4;
                         }
                     }
                 }
             } else {
                 if (A.contains("Ca") || A.contains("Sr") || A.contains("Ba") || A.contains("Ra")) {
-                    l = 2;
+                    typeReagent = 2;
                 } else {
                     if (A.contains("Na") || A.contains("K") || A.contains("Li") || A.contains("Rb") || A.contains("Cs") || A.contains("Fr")) {
-                        l = 1;
+                        typeReagent = 1;
                     }
                 }
             }
         }
-        return l;
+        return typeReagent;
     }
 
 
-    public String ReactH(String A, int k) { // реакции для водорода
+    public String ReactH(String A) { // реакции для водорода
         String product = "";
-        if (k == 1) {
-            int l = ReagH(A);
-            switch(l){
+        int elClass = getClass(A)
+        if (elClass == 1) {
+            int typeReagent = ReagH(A);
+            switch(typeReagent){
                 case 0: product += "реакция не идет";
                 case 1: {
                     product += A;
@@ -301,7 +311,7 @@ public class HelloApplication extends Application {
                     product += a1;
                 }
             }
-        } else if (k == 6) {
+        } else if (elClass == 6) {
                 int n = A.indexOf("O");
                 String a2 = "";
                 for (int i = 0; i < n; i++) {
