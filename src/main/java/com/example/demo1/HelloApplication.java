@@ -89,32 +89,32 @@ public class HelloApplication extends Application {
     }
 
     public String reaction(String a,String b){
-        int k = getClass(a);
-        int c = getClass(b)
+        int classA = getClass(a);
+        int classB = getClass(b)
         String st = "";
-        if (k == 2 && c == 3) {// соль+кислота реакция нейтрализации
+        if (classA == 2 && classB == 3) {// соль+кислота реакция нейтрализации
             String stn1 = Neitralization(a, b);
             st += stn1;
-        } else if (k == 3 && c == 2) { // аналогично предыдущему, в случае если запись противоположна
+        } else if (classA == 3 && classB == 2) { // аналогично предыдущему, в случае если запись противоположна
                 String stn2 = Neitralization(b, a);
                 st += stn2;
-        } else if (k == 1) { // реакция для водорода и кислорода
+        } else if (classA == 1) { // реакция для водорода и кислорода
             if (a.contains("H2")) { // водород
-                String cs = ReactH(b, c);
+                String cs = ReactH(b);
                 st += cs;
             } else if (a.contains("O2")) { // кислород
-                            String cs = ReactO(b, k);
+                            String cs = ReactO(b);
                             st += cs;
                         }
-        } else if (c == 1) {
+        } else if (classB == 1) {
             if (b.contains("H2")) { // аналогично для другого
-                String cs = ReactH(a, k);
+                String cs = ReactH(a);
                 st += cs;
             } else if (b.contains("O2")) { // аналогично для другого
-                                String cs = ReactO(a, k);
+                                String cs = ReactO(a);
                                 st += cs;
                             }
-        } else if (k == 4 && c == 4) {
+        } else if (classA == 4 && classA == 4) {
             String result = sreaction(a, b);
             st += result;
         }
@@ -285,8 +285,8 @@ public class HelloApplication extends Application {
 
     public String ReactH(String A) { // реакции для водорода
         String product = "";
-        int elClass = getClass(A)
-        if (elClass == 1) {
+        int classA = getClass(A)
+        if (classA == 1) {
             int typeReagent = ReagH(A);
             switch(typeReagent){
                 case 0: product += "реакция не идет";
@@ -311,7 +311,7 @@ public class HelloApplication extends Application {
                     product += a1;
                 }
             }
-        } else if (elClass == 6) {
+        } else if (classA == 6) {
                 int n = A.indexOf("O");
                 String a2 = "";
                 for (int i = 0; i < n; i++) {
@@ -357,11 +357,12 @@ public class HelloApplication extends Application {
         return l;
     }
 
-    public String ReactO(String A, int k) { // реакции для кислорода
+    public String ReactO(String A) { // реакции для кислорода
         String product = "";
+        int classA = getClass(A);
         if (k == 1) {
-            int l = ReagO(A);
-            switch (l) {
+            int TypeReagent = ReagO(A);
+            switch (TypeReagent) {
                 case 0:
                     product += "реакция не идет";
                 case 1:
@@ -378,7 +379,7 @@ public class HelloApplication extends Application {
                     product += "CO2";
             }
         }else {
-            if (k == 5) {
+            if (classA == 5) {
                 if (A.contains("NH3")) {
                     product += "N2+H2O";
                 } else if (A.contains("H2S")) {
