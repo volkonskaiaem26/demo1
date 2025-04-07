@@ -58,10 +58,9 @@ public class HelloApplication extends Application {
             Eclass ec = new Eclass(text);
             String a = ec.getA();
             String b = ec.getB();
-            int k = getClass(a);
-            int c = getClass(b);
+            Main main = new Main(a,b);
             String st = "";
-            st += reaction(a,b,k,c);
+            st += main.reaction();
             int pr = osColor(st);
             switch(pr){
                 case 1: rectangle2.setFill(Color.SNOW);
