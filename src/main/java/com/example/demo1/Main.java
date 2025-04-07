@@ -2,6 +2,13 @@ package com.example.demo1;
 
 public class Main {
 
+    int EL_SIMPLE = 1;
+    int El_ACID = 2;
+    int EL_ALKALI = 3;
+    int EL_SALT = 4;
+    int EL_BIN_H = 5;
+    int EL_OXIDE = 6;
+    int EL_WATER = 7;
     String A;
     String B;
     
@@ -16,13 +23,13 @@ public class Main {
         int classA = getClass(a);
         int classB = getClass(b)
         String st = "";
-        if (classA == 2 && classB == 3) {// соль+кислота реакция нейтрализации
+        if (classA == EL_ACISD && classB == EL_ALKALI) {// соль+кислота реакция нейтрализации
             String stn1 = Neitralization(a, b);
             st += stn1;
-        } else if (classA == 3 && classB == 2) { // аналогично предыдущему, в случае если запись противоположна
+        } else if (classA == EL_ALKALI && classB == EL_ACID) { // аналогично предыдущему, в случае если запись противоположна
                 String stn2 = Neitralization(b, a);
                 st += stn2;
-        } else if (classA == 1) { // реакция для водорода и кислорода
+        } else if (classA == EL_SIMPLE) { // реакция для водорода и кислорода
             if (a.contains("H2")) { // водород
                 String cs = ReactH(b);
                 st += cs;
@@ -30,7 +37,7 @@ public class Main {
                             String cs = ReactO(b);
                             st += cs;
                         }
-        } else if (classB == 1) {
+        } else if (classB == EL_SIMPLE) {
             if (b.contains("H2")) { // аналогично для другого
                 String cs = ReactH(a);
                 st += cs;
@@ -38,7 +45,7 @@ public class Main {
                                 String cs = ReactO(a);
                                 st += cs;
                             }
-        } else if (classA == 4 && classA == 4) {
+        } else if (classA == EL_SALT && classA == EL_SALT) {
             String result = sreaction(a, b);
             st += result;
         }
@@ -48,38 +55,38 @@ public class Main {
     public int getClass(String A){    // определение класса вещества
         int elClass = 0;
         if (A.contains("OH")) {
-            elClass = 3;
+            elClass = EL_ALKALI;
         } else {
             if (a.contains("H")) {
                 if (A.contains("H2") && A.length() == 2) {
-                    elClass = 1;
+                    elClass = EL_SIMPLE;
                 } else if (A.indexOf("H") == 0) {
                     if (A.contains("H2O")) {
-                        elClass = 7;
+                        elClass = EL_WATER;
                     } else {
-                        elClass = 2;
+                        elClass = EL_ACID;
                     }
                 } else {
-                    elClass = 5;
+                    elClass = EL_BIN_H;
                 }
             } else {
                 if (A.length() == 1) {
-                    elClass = 1;
+                    elClass = EL_SIMPLE;
                 } else if (A.length() == 2) {
                     if (A.contains("2") || ((int) A.charAt(1) <= 122 && (int) A.charAt(1) >= 97)) {
-                        elClass = 1;
+                        elClass = EL_SIMPLE;
                     } else if (!A.contains("O")) {
-                        elClass = 4;
+                        elClass = EL_SALT;
                     } else if (A.indexOf("O") == A.length() - 1) {
-                        elClass = 6;
+                        elClass = EL_OXIDE;
                     }
                 } else {
                     if (!A.contains("O")) {
-                        elClass = 4;
+                        elClass = EL_SALT;
                     } else if (A.indexOf("O") == A.length() - 1) {
-                        elClass = 6;
+                        elClass = EL_OXIDE;
                     } else {
-                        elClass = 4;
+                        elClass = EL_SALT;
                     }
                 }
             }
@@ -92,9 +99,9 @@ public class Main {
         String ion1 = "";
         String ion2 = "";
         String ions = "";
-        if (elClass == 1) {
+        if (elClass == EL_SIMPLE) {
             ion1 += A;
-        } else if (elClass == 2) {
+        } else if (elClass == EL_ACIS) {
             int valOfAnion = 1;
             int indexOfAnion = 1;
             if ((int) A.charAt(1) >= 48 && (int) A.charAt(1) <= 57) {
@@ -105,7 +112,7 @@ public class Main {
             for (int i = indexOfAnion; i < A.length(); i++) {
                 ion2 += A.charAt(i);
             }
-        } else if (elClass == 3) {
+        } else if (elClass == EL_ALKALI) {
             int valOfKation = 1;
             if ((int) A.charAt(A.length() - 1) >= 48 && (int) A.charAt(A.length() - 1) <= 57) {
                 valOfKation = (int) A.charAt(A.length() - 1) - 48;
@@ -124,7 +131,7 @@ public class Main {
             }
         }
         ions += ion1;
-        if (elClass != 1) {
+        if (elClass != EL_SIMPLE) {
             ions += ";";
             ions += ion2;
         }
