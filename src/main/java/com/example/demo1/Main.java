@@ -3,7 +3,7 @@ package com.example.demo1;
 public class Main {
 
     int EL_SIMPLE = 1;
-    int El_ACID = 2;
+    int EL_ACID = 2;
     int EL_ALKALI = 3;
     int EL_SALT = 4;
     int EL_BIN_H = 5;
