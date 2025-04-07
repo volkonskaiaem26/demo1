@@ -99,6 +99,10 @@ public class HelloApplication extends Application {
         }
         return 0;
     }
+
+    public int gasColor(String A){
+        Formula[] gases = {new Formula("O2",0), new Formula("H2", 0), new Formula("CO2", 0), new Formula("N2", 0), new Formula("NH3", 0), new Formula("H2S", 0), new Formula("SO2", 0), new Formula("NO", 0), new Formula("N2O", 0), new Formula("NO2", 1), new Formula("Cl2", 2), new Formula("O3", 3)};
+    }
 }
 
 
