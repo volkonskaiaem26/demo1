@@ -1,9 +1,9 @@
 package com.example.demo1;
 
-public class kations {
+public class Kations {
     String kation;
     int val;
-    public kations(String kation, int val) {
+    public Kations(String kation, int val) {
         this.kation = kation;
         this.val = val;
     }
