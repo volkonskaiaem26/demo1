@@ -316,5 +316,80 @@ public class Main {
         return product;
     }
 
-    
+    public String sreaction(String A, String B) {
+        String product1 = "";
+        String product2 = "";
+        String product = "";
+        int[][] table1 = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0}, {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 2, 2, 1, 0}, {0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1}, {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 1}};
+        Anions[] an = {new Anions("NO3", 1), new Anions("F", 1), new Anions("Cl", 1), new Anions("Br", 1), new Anions("I", 1), new Anions("SO3", 2),new Anions("SO4", 2),new Anions("CO3", 2),new Anions("SiO3", 2),new Anions("NO3", 1),new Anions("PO4", 3),new Anions("CrO4", 2)};
+        kations [] kat = {new kations("Li", 1),new kations("NH4", 1),new kations("K", 1),new kations("Na", 1),new kations("Ag", 1),new kations("Ba", 2),new kations("Ca", 2),new kations("Mg", 2),new kations("Zn", 2),new kations("Mn", 2),new kations("Cu", 2),new kations("Hg", 2),new kations("Pb", 2),new kations("Fe", 2),new kations("Al", 3),new kations("Cr", 3),new kations("Bi", 3),new kations("Sn", 2),new kations("Sr", 2)};
+        String kationA = "";
+        String anionA = "";
+        String kationB = "";
+        String anionB = "";
+        int kA = 0;
+        int aA = 0;
+        int kB = 0;
+        int aB = 0;
+        for (int i = 0; i < kat.length; i++) {
+            if (A.contains(kat[i].kation)) {
+                kA = i;
+            }
+            if (B.contains(kat[i].kation)) {
+                kB = i;
+            }
+        }
+        for (int i = 0; i < an.length; i++) {
+            if (A.contains(an[i].anion)) {
+                aA = i;
+            }
+            if (B.contains(an[i].anion)) {
+                aB = i;
+            }
+        }
+        int ap = table1[aA][kB];
+        int bp = table1[aB][kA];
+        int r = 0;
+        if (ap + bp > 0) {
+            r = 1;
+        }
+        if (r == 1) {
+            kationA += kat[kA].kation;
+            anionA += an[aA].anion;
+            kationB += kat[kB].kation;
+            anionB += an[aB].anion;
+            int valkA = kat[kA].val;
+            int valaA = an[aA].val;
+            int valkB = kat[kB].val;
+            int valaB = an[aB].val;
+            product1 += kationA;
+            Calcval p1 = new Calcval(valkA,valaB);
+            Calcval p2 = new Calcval(valkB,valaA);
+            valkA = p1.getA();
+            valaB = p1.getB();
+            valkB = p2.getA();
+            valaA = p2.getB();
+            if(valaB!=1) {
+                product1 += valaB;
+            }
+            if(valkA!=1) {
+                product1 += "(" + anionB + ")" + valkA;
+            }else{
+                product1 += anionB;
+            }
+            product2 += kationB;
+            if(valaA!=1) {
+                product2 += valaA;
+            }
+            if(valkB!=1) {
+                product2 += "(" + anionA + ")" + valkB;
+            }else{
+                product2 += anionA;
+            }
+            product += product1 + "+" + product2;
+        }else{
+            product += "реакция не идет";
+        }
+        return product;
+    }
 }
