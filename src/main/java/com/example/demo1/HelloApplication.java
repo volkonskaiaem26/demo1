@@ -120,7 +120,9 @@ new Formula("MnS",COLOR_BLANCHEDALMOND)};
 
 
     public int gasColor(String A){
-        Formula[] gases = {new Formula("O2",1), new Formula("H2", 1), new Formula("CO2", 1), new Formula("N2", 1), new Formula("NH3", 1), new Formula("H2S", 1), new Formula("SO2", 1), new Formula("NO", 1), new Formula("N2O", 1), new Formula("NO2", 2), new Formula("Cl2", 3), new Formula("O3", 4)};
+        Formula[] gases = {new Formula("O2",1), new Formula("H2", 1), new Formula("CO2", 1), new Formula("N2", 1), 
+new Formula("NH3", 1), new Formula("H2S", 1), new Formula("SO2", 1), new Formula("NO", 1),
+new Formula("N2O", 1), new Formula("NO2", 2), new Formula("Cl2", 3), new Formula("O3", 4)};
 
         for (Formula formula : formulas) {
             if (A.contains(formula.name)){
