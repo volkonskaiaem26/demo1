@@ -177,35 +177,44 @@ public class Main {
         return product;
     }
 
+    int TYPE_NOTHING = 0;
+    int TYPE_METALLS_1 = 1;
+    int TYPE_METALLS_2 = 2;
+    int TYPE_S = 3;
+    int TYPE_N = 4;
+    int TYPE_C = 5;
+    int TYPE_O = 6;
+    int TYPE_HAL = 7;
+
     public int ReagH(String A) { //определение более точной классификации вещества
-        int typeReagent = 0;
+        int typeReagent = TYPE_NOTHING;
         if (A.length() == 1) {
             if (A.contains("S")) {
-                typeReagent = 3;
+                typeReagent = TYPE_S;
             } else {
                 if (A.contains("C")) {
-                    typeReagent = 5;
+                    typeReagent = TYPE_C;
                 }
             }
         } else {
             if (A.contains("2")) {
                 if (A.contains("O")) {
-                    typeReagent = 6;
+                    typeReagent = TYPE_O;
                 } else {
                     if (A.contains("F") || A.contains("Cl") || A.contains("Br") || A.contains("I")) {
-                        typeReagent = 7;
+                        typeReagent = TYPE_HAL;
                     } else {
                         if (A.contains("N")) {
-                            typeReagent = 4;
+                            typeReagent = TYPE_N;
                         }
                     }
                 }
             } else {
                 if (A.contains("Ca") || A.contains("Sr") || A.contains("Ba") || A.contains("Ra")) {
-                    typeReagent = 2;
+                    typeReagent = TYPE_METALLS_2;
                 } else {
                     if (A.contains("Na") || A.contains("K") || A.contains("Li") || A.contains("Rb") || A.contains("Cs") || A.contains("Fr")) {
-                        typeReagent = 1;
+                        typeReagent = TYPE_METALLS_1;
                     }
                 }
             }
@@ -220,20 +229,20 @@ public class Main {
         if (classA == 1) {
             int typeReagent = ReagH(A);
             switch(typeReagent){
-                case 0: product += "реакция не идет";
-                case 1: {
+                case TYPE_NOTHING: product += "реакция не идет";
+                case TYPE_METALLS_1: {
                     product += A;
                     product += "H";
                 }
-                case 2: {
+                case TYPE_METALLS_2: {
                     product += A;
                     product += "H2";
                 }
-                case 3: product += "H2S";
-                case 4: product += "NH3";
-                case 5: product += "CH4";
-                case 6: product += "H2O";
-                case 7: {
+                case TYPE_S: product += "H2S";
+                case TYPE_N: product += "NH3";
+                case TYPE_C: product += "CH4";
+                case TYPE_O: product += "H2O";
+                case TYPE_HAL: {
                     String a1 = "";
                     for (int i = 0; i < (A.length() - 1); i++) {
                         a1 += A.charAt(i);
