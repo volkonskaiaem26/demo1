@@ -274,31 +274,31 @@ public class Main {
     int TYPE_O_C = 6;
 
     public int getReagentsO(String A) {
-        int l = 0;
+        int l = TYPE_O_NOTHING;
         if (A.length() == 1) {
             if (A.contains("S")) {
-                l = 2;
+                l = TYPE_O_S;
             } else {
                 if (A.contains("C")) {
-                    l = 6;
+                    l = TYPE_O_C;
                 } else {
                     if (A.contains("P")) {
-                        l = 4;
+                        l = TYPE_O_P;
                     }
                 }
             }
         } else {
             if (A.contains("2")) {
                 if (A.contains("F")) {
-                    l = 1;
+                    l = TYPE_O_F;
                 } else {
                     if (A.contains("N")) {
-                        l = 5;
+                        l = TYPE_O_N;
                     }
                 }
             } else {
                 if (A.contains("Si")) {
-                    l = 3;
+                    l = TYPE_O_SI;
                 } // для написания реакций с металлами необходимо создать таблицу валентностей, иначе будет неверно
             }
         }
@@ -322,7 +322,7 @@ public class Main {
                 case TYPE_O_P:
                     product += "P2O5";
                 case TYPE_O_N:
-                    product += "NO";
+                    product += "NO2";
                 case TYPE_O_C:
                     product += "CO2";
             }
