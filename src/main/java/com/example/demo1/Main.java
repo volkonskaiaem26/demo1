@@ -31,18 +31,18 @@ public class Main {
                 st += stn2;
         } else if (classA == EL_SIMPLE) { // реакция для водорода и кислорода
             if (a.contains("H2")) { // водород
-                String cs = ReactH(b);
+                String cs = getReactionH(b);
                 st += cs;
             } else if (a.contains("O2")) { // кислород
-                            String cs = ReactO(b);
+                            String cs = getReactionO(b);
                             st += cs;
                         }
         } else if (classB == EL_SIMPLE) {
             if (b.contains("H2")) { // аналогично для другого
-                String cs = ReactH(a);
+                String cs = getReactionH(a);
                 st += cs;
             } else if (b.contains("O2")) { // аналогично для другого
-                                String cs = ReactO(a);
+                                String cs = getReactionO(a);
                                 st += cs;
                             }
         } else if (classA == EL_SALT && classA == EL_SALT) {
@@ -177,44 +177,44 @@ public class Main {
         return product;
     }
 
-    int TYPE_NOTHING = 0;
-    int TYPE_METALLS_1 = 1;
-    int TYPE_METALLS_2 = 2;
-    int TYPE_S = 3;
-    int TYPE_N = 4;
-    int TYPE_C = 5;
-    int TYPE_O = 6;
-    int TYPE_HAL = 7;
+    int TYPE_H_NOTHING = 0;
+    int TYPE_H_METALLS_1 = 1;
+    int TYPE_H_METALLS_2 = 2;
+    int TYPE_H_S = 3;
+    int TYPE_H_N = 4;
+    int TYPE_H_C = 5;
+    int TYPE_H_O = 6;
+    int TYPE_H_HAL = 7;
 
-    public int ReagH(String A) { //определение более точной классификации вещества
+    public int getReagentsH(String A) { //определение более точной классификации вещества
         int typeReagent = TYPE_NOTHING;
         if (A.length() == 1) {
             if (A.contains("S")) {
-                typeReagent = TYPE_S;
+                typeReagent = TYPE_H_S;
             } else {
                 if (A.contains("C")) {
-                    typeReagent = TYPE_C;
+                    typeReagent = TYPE_H_C;
                 }
             }
         } else {
             if (A.contains("2")) {
                 if (A.contains("O")) {
-                    typeReagent = TYPE_O;
+                    typeReagent = TYPE_H_O;
                 } else {
                     if (A.contains("F") || A.contains("Cl") || A.contains("Br") || A.contains("I")) {
-                        typeReagent = TYPE_HAL;
+                        typeReagent = TYPE_H_HAL;
                     } else {
                         if (A.contains("N")) {
-                            typeReagent = TYPE_N;
+                            typeReagent = TYPE_H_N;
                         }
                     }
                 }
             } else {
                 if (A.contains("Ca") || A.contains("Sr") || A.contains("Ba") || A.contains("Ra")) {
-                    typeReagent = TYPE_METALLS_2;
+                    typeReagent = TYPE_H_METALLS_2;
                 } else {
                     if (A.contains("Na") || A.contains("K") || A.contains("Li") || A.contains("Rb") || A.contains("Cs") || A.contains("Fr")) {
-                        typeReagent = TYPE_METALLS_1;
+                        typeReagent = TYPE_H_METALLS_1;
                     }
                 }
             }
@@ -223,11 +223,11 @@ public class Main {
     }
 
 
-    public String ReactH(String A) { // реакции для водорода
+    public String getReactionH(String A) { // реакции для водорода
         String product = "";
         int classA = getClass(A)
         if (classA == 1) {
-            int typeReagent = ReagH(A);
+            int typeReagent = getReagentsH(A);
             switch(typeReagent){
                 case TYPE_NOTHING: product += "реакция не идет";
                 case TYPE_METALLS_1: {
@@ -265,7 +265,15 @@ public class Main {
         return product;
     }
 
-    public int ReagO(String A) {
+    int TYPE_O_NOTHING = 0;
+    int TYPE_O_F = 1;
+    int TYPE_O_S = 2;
+    int TYPE_O_SI = 3;
+    int TYPE_O_P = 4;
+    int TYPE_O_N = 5;
+    int TYPE_O_C = 6;
+
+    public int getReagentsO(String A) {
         int l = 0;
         if (A.length() == 1) {
             if (A.contains("S")) {
@@ -281,8 +289,8 @@ public class Main {
             }
         } else {
             if (A.contains("2")) {
-                if (A.contains("H")) {
-                    l = 6;
+                if (A.contains("F")) {
+                    l = 1;
                 } else {
                     if (A.contains("N")) {
                         l = 5;
@@ -297,25 +305,25 @@ public class Main {
         return l;
     }
 
-    public String ReactO(String A) { // реакции для кислорода
+    public String getReactionO(String A) { // реакции для кислорода
         String product = "";
         int classA = getClass(A);
         if (k == 1) {
-            int TypeReagent = ReagO(A);
+            int TypeReagent = getReagentsO(A);
             switch (TypeReagent) {
-                case 0:
+                case TYPE_O_NOTHING:
                     product += "реакция не идет";
-                case 1:
+                case TYPE_O_F:
                     product += "OF2";
-                case 2:
+                case TYPE_O_S:
                     product += "SO2";
-                case 3:
+                case TYPE_O_SI:
                     product += "SiO2";
-                case 4:
+                case TYPE_O_P:
                     product += "P2O5";
-                case 5:
+                case TYPE_O_N:
                     product += "NO";
-                case 6:
+                case TYPE_O_C:
                     product += "CO2";
             }
         }else {
