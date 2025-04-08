@@ -17,6 +17,16 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
 
+    int COLOR_SNOW = 1;
+    int COLOR_KHAKI = 2;
+    int COLOR_DODGERDBLUE = 3;
+    int COLOR_DARKSLATEDGREY = 4;
+    int COLOR_DARKGREEN = 5;
+    int COLOR_MAROON = 6;
+    int COLOR_FIREBRICK = 7;
+    int COLOR_BLANCHEDALMOND = 8;
+
+
     @Override
     public void start(Stage stage) throws IOException { //создание окна программы
         Label lbl = new Label();//вывод
@@ -61,16 +71,16 @@ public class HelloApplication extends Application {
             Main main = new Main(a,b);
             String st = "";
             st += main.reaction();
-            int pr = osColor(st);
+            int SedimentColor = getSedimentColor(st);
             switch(pr){
-                case 1: rectangle2.setFill(Color.SNOW);
-                case 2: rectangle2.setFill(Color.KHAKI);
-                case 3: rectangle2.setFill(Color.DODGERBLUE);
-                case 4: rectangle2.setFill(Color.DARKSLATEGREY);
-                case 5: rectangle2.setFill(Color.DARKGREEN);
-                case 6: rectangle2.setFill(Color.MAROON);
-                case 7: rectangle2.setFill(Color.FIREBRICK);
-                case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
+                case COLOR_SNOW: rectangle2.setFill(Color.SNOW);
+                case COLOR_KHAKI: rectangle2.setFill(Color.KHAKI);
+                case COLOR_DODGERDBLUE: rectangle2.setFill(Color.DODGERBLUE);
+                case COLOR_DARKSLATEDGREY: rectangle2.setFill(Color.DARKSLATEGREY);
+                case COLOR_DARKGREEN: rectangle2.setFill(Color.DARKGREEN);
+                case COLOR_MAROON: rectangle2.setFill(Color.MAROON);
+                case COLOR_FIREBRICK: rectangle2.setFill(Color.FIREBRICK);
+                case COLOR_BLANCHEDALMOND: rectangle2.setFill(Color.BLANCHEDALMOND);
             }
             lbl.setText("Products: " + st);
         });
@@ -83,13 +93,14 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+
     public static void main(String[] args) {
         launch();
     }
 
 
-    public int osColor(String A) {
-        Formula[] formulas = {new Formula("CaC03",1),new Formula("BaC03",1) ,new Formula("Mg03",1) ,new Formula("PbC03",1) ,new Formula("Ca3(PO4)2",1) ,new Formula("Mg3(PO4)2",1) ,new Formula("BaSO4",1) ,new Formula("Li3PO4",1) ,new Formula("Li2SiO3",1) ,new Formula("PbSO4",1) ,new Formula("ZnS",1) ,new Formula("AgCl",1) ,new Formula("PbCl2",1) ,new Formula("AgBr",2) ,new Formula("PbBr2",2) ,new Formula("Ag2CO3",2) ,new Formula("AgI",2) ,new Formula("PbI2",2) ,new Formula("Ag3PO4",2) ,new Formula("Cu(OH)2",3) ,new Formula("CuS",4) ,new Formula("Ag2S",4) ,new Formula("PbS",4) ,new Formula("Fe(OH)2",5) ,new Formula("Ag2O",6) ,new Formula("HgS",7),new Formula("MnS",8)  };
+    public int getSedimentColor(String A) {
+        Formula[] formulas = {new Formula("CaC03",COLOR_SNOW),new Formula("BaC03",COLOR_SNOW) ,new Formula("MgC03",COLOR_SNOW) ,new Formula("PbCO3",COLOR_SNOW) ,new Formula("Ca3(PO4)2",COLOR_SNOW) ,new Formula("Mg3(PO4)2",COLOR_SNOW) ,new Formula("BaSO4",COLOR_SNOW) ,new Formula("Li3PO4",COLOR_SNOW) ,new Formula("Li2SiO3",COLOR_SNOW) ,new Formula("PbSO4",COLOR_SNOW) ,new Formula("ZnS",COLOR_SNOW) ,new Formula("AgCl",COLOR_KHAKI) ,new Formula("PbCl2",COLOR_KHAKI) ,new Formula("AgBr",COLOR_KHAKI) ,new Formula("PbBr2",COLOR_KHAKI) ,new Formula("Ag2CO3",COLOR_KHAKI) ,new Formula("AgI",COLOR_KHAKI) ,new Formula("PbI2",COLOR_KHAKI) ,new Formula("Ag3PO4",COLOR_KHAKI) ,new Formula("Cu(OH)2",COLOR_DODGERDBLUE) ,new Formula("CuS",COLOR_DARKSLATEDGREY) ,new Formula("Ag2S",COLOR_DARKSLATEDGREY) ,new Formula("PbS",COLOR_DARKSLATEDGREY) ,new Formula("Fe(OH)2",COLOR_DARKGREEN) ,new Formula("Ag2O",COLOR_MAROON) ,new Formula("HgS",COLOR_FIREBRICK),new Formula("MnS",COLOR_BLANCHEDALMOND)  };
         //String[] elements = {"CaCO3","BaCO3","MgCO3","PbCO3","Ca3(PO4)2","Ba3(PO4)2","Mg3(PO4)2","BaSO4","Li3PO4","PbSO4","ZnS","AgCl","Mg(OH)2","Zn(OH)2","Be(OH)2","Al(OH)3","AgBr","PbBr2","Ag2CO3","AgI","PbI2","Ag3PO4","Cu(OH)2","CuS","Ag2S","PbS","Fe(OH)2","HgS","MnS"};
         //int[] colors = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3,4,4,4,5,6,7};
         for (Formula formula : formulas) {
@@ -100,8 +111,9 @@ public class HelloApplication extends Application {
         return 0;
     }
 
+
     public int gasColor(String A){
-        Formula[] gases = {new Formula("O2",0), new Formula("H2", 0), new Formula("CO2", 0), new Formula("N2", 0), new Formula("NH3", 0), new Formula("H2S", 0), new Formula("SO2", 0), new Formula("NO", 0), new Formula("N2O", 0), new Formula("NO2", 1), new Formula("Cl2", 2), new Formula("O3", 3)};
+        Formula[] gases = {new Formula("O2",1), new Formula("H2", 1), new Formula("CO2", 1), new Formula("N2", 1), new Formula("NH3", 1), new Formula("H2S", 1), new Formula("SO2", 1), new Formula("NO", 1), new Formula("N2O", 1), new Formula("NO2", 2), new Formula("Cl2", 3), new Formula("O3", 4)};
         for (Formula formula : formulas) {
             if (A.contains(formula.name)){
                 return formula.color;
