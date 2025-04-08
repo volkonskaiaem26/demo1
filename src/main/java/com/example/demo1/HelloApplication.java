@@ -26,6 +26,11 @@ public class HelloApplication extends Application {
     int COLOR_FIREBRICK = 7;
     int COLOR_BLANCHEDALMOND = 8;
 
+    int GAS_COLOR_TRANSPARENT = 1;
+    int GAS_COLOR_DARKRED = 2;
+    int GAS_COLOR_DARKKHAKI = 3;
+    int GAS_COLOR_MEDIUMBLUE = 4;
+
 
     @Override
     public void start(Stage stage) throws IOException { //создание окна программы
@@ -120,9 +125,10 @@ new Formula("MnS",COLOR_BLANCHEDALMOND)};
 
 
     public int gasColor(String A){
-        Formula[] gases = {new Formula("O2",1), new Formula("H2", 1), new Formula("CO2", 1), new Formula("N2", 1), 
-new Formula("NH3", 1), new Formula("H2S", 1), new Formula("SO2", 1), new Formula("NO", 1),
-new Formula("N2O", 1), new Formula("NO2", 2), new Formula("Cl2", 3), new Formula("O3", 4)};
+        Formula[] gases = {new Formula("O2",GAS_COLOR_TRANSPARENT), new Formula("H2", GAS_COLOR_TRANSPARENT), new Formula("CO2", GAS_COLOR_TRANSPARENT),
+new Formula("N2", GAS_COLOR_TRANSPARENT), new Formula("NH3", GAS_COLOR_TRANSPARENT), new Formula("H2S", GAS_COLOR_TRANSPARENT), 
+new Formula("SO2", GAS_COLOR_TRANSPARENT), new Formula("NO", GAS_COLOR_TRANSPARENT), new Formula("N2O", GAS_COLOR_TRANSPARENT), 
+new Formula("NO2", GAS_COLOR_DARKRED), new Formula("Cl2", GAS_COLOR_DARKKHAKI), new Formula("O3", GAS_COLOR_MEDIUMBLUE)};
 
         for (Formula formula : formulas) {
             if (A.contains(formula.name)){
