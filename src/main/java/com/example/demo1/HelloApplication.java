@@ -70,22 +70,26 @@ public class HelloApplication extends Application {
 
         btn.setOnAction(event -> {
             String text = textField.getText();
-            Eclass ec = new Eclass(text);
-            String a = ec.getA();
-            String b = ec.getB();
-            Main main = new Main(a,b);
             String st = "";
-            st += main.reaction();
-            int SedimentColor = getSedimentColor(st);
-            switch(pr){
-                case COLOR_SNOW: rectangle2.setFill(Color.SNOW);
-                case COLOR_KHAKI: rectangle2.setFill(Color.KHAKI);
-                case COLOR_DODGERDBLUE: rectangle2.setFill(Color.DODGERBLUE);
-                case COLOR_DARKSLATEDGREY: rectangle2.setFill(Color.DARKSLATEGREY);
-                case COLOR_DARKGREEN: rectangle2.setFill(Color.DARKGREEN);
-                case COLOR_MAROON: rectangle2.setFill(Color.MAROON);
-                case COLOR_FIREBRICK: rectangle2.setFill(Color.FIREBRICK);
-                case COLOR_BLANCHEDALMOND: rectangle2.setFill(Color.BLANCHEDALMOND);
+            if(text!=null){
+               Eclass ec = new Eclass(text);
+               String a = ec.getA();
+               String b = ec.getB();
+               Main main = new Main(a,b);
+               st += main.reaction();
+               int SedimentColor = getSedimentColor(st);
+               switch(pr){
+                   case COLOR_SNOW: rectangle2.setFill(Color.SNOW);
+                   case COLOR_KHAKI: rectangle2.setFill(Color.KHAKI);
+                   case COLOR_DODGERDBLUE: rectangle2.setFill(Color.DODGERBLUE);
+                   case COLOR_DARKSLATEDGREY: rectangle2.setFill(Color.DARKSLATEGREY);
+                   case COLOR_DARKGREEN: rectangle2.setFill(Color.DARKGREEN);
+                   case COLOR_MAROON: rectangle2.setFill(Color.MAROON);
+                   case COLOR_FIREBRICK: rectangle2.setFill(Color.FIREBRICK);
+                   case COLOR_BLANCHEDALMOND: rectangle2.setFill(Color.BLANCHEDALMOND);
+               }
+            }else{
+               st += "реакция не идет";
             }
             lbl.setText("Products: " + st);
         });
