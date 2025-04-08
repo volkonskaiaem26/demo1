@@ -68,29 +68,34 @@ public class HelloApplication extends Application {
         group2.setLayoutY(210.0);
         group2.setLayoutX(201.0);
 
+
         btn.setOnAction(event -> {
             String text = textField.getText();
             String st = "";
-            if(text!=null){
-               Eclass ec = new Eclass(text);
-               String a = ec.getA();
-               String b = ec.getB();
-               Main main = new Main(a,b);
-               st += main.reaction();
-               int SedimentColor = getSedimentColor(st);
-               switch(pr){
-                   case COLOR_SNOW: rectangle2.setFill(Color.SNOW);
-                   case COLOR_KHAKI: rectangle2.setFill(Color.KHAKI);
-                   case COLOR_DODGERDBLUE: rectangle2.setFill(Color.DODGERBLUE);
-                   case COLOR_DARKSLATEDGREY: rectangle2.setFill(Color.DARKSLATEGREY);
-                   case COLOR_DARKGREEN: rectangle2.setFill(Color.DARKGREEN);
-                   case COLOR_MAROON: rectangle2.setFill(Color.MAROON);
-                   case COLOR_FIREBRICK: rectangle2.setFill(Color.FIREBRICK);
-                   case COLOR_BLANCHEDALMOND: rectangle2.setFill(Color.BLANCHEDALMOND);
-               }
-            }else{
-               st += "реакция не идет";
+            boolean isCorrect = false;
+            if(text.contains("+")){
+                isCorrect = true;
+                FormulaParser ec = new FormulaParser(text);
+                String a = ec.getA();
+                String b = ec.getB();
+                Main main = new Main(a,b);
+                st += main.reaction();
+                int SedimentColor = getSedimentColor(st);
+                switch(SedimentColor){
+                    case 1: rectangle2.setFill(Color.SNOW);
+                    case 2: rectangle2.setFill(Color.KHAKI);
+                    case 3: rectangle2.setFill(Color.DODGERBLUE);
+                    case 4: rectangle2.setFill(Color.DARKSLATEGREY);
+                    case 5: rectangle2.setFill(Color.DARKGREEN);
+                    case 6: rectangle2.setFill(Color.MAROON);
+                    case 7: rectangle2.setFill(Color.FIREBRICK);
+                    case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
+                }
             }
+            if(!isCorrect){
+                st += "реакция не идет";
+            }
+
             lbl.setText("Products: " + st);
         });
 
@@ -110,16 +115,36 @@ public class HelloApplication extends Application {
 
     public int getSedimentColor(String A) {
 
-        Formula[] formulas = {new Formula("CaC03",COLOR_SNOW), new Formula("BaC03",COLOR_SNOW), new Formula("MgC03",COLOR_SNOW),
-new Formula("PbCO3",COLOR_SNOW), new Formula("Ca3(PO4)2",COLOR_SNOW), new Formula("Mg3(PO4)2",COLOR_SNOW), new Formula("BaSO4",COLOR_SNOW),
-new Formula("Li3PO4",COLOR_SNOW), new Formula("Li2SiO3",COLOR_SNOW), new Formula("PbSO4",COLOR_SNOW), new Formula("ZnS",COLOR_SNOW),
-new Formula("AgCl",COLOR_KHAKI), new Formula("PbCl2",COLOR_KHAKI), new Formula("AgBr",COLOR_KHAKI), new Formula("PbBr2",COLOR_KHAKI),
-new Formula("Ag2CO3",COLOR_KHAKI), new Formula("AgI",COLOR_KHAKI), new Formula("PbI2",COLOR_KHAKI), new Formula("Ag3PO4",COLOR_KHAKI),
-new Formula("Cu(OH)2",COLOR_DODGERDBLUE), new Formula("CuS",COLOR_DARKSLATEDGREY), new Formula("Ag2S",COLOR_DARKSLATEDGREY),
-new Formula("PbS",COLOR_DARKSLATEDGREY), new Formula("Fe(OH)2",COLOR_DARKGREEN), new Formula("Ag2O",COLOR_MAROON), new Formula("HgS",COLOR_FIREBRICK),
-new Formula("MnS",COLOR_BLANCHEDALMOND)};
+        Formula[] sediments = {
+                new Formula("CaC03",COLOR_SNOW),
+                new Formula("BaC03",COLOR_SNOW),
+                new Formula("MgC03",COLOR_SNOW),
+                new Formula("PbCO3",COLOR_SNOW),
+                new Formula("Ca3(PO4)2",COLOR_SNOW),
+                new Formula("Mg3(PO4)2",COLOR_SNOW),
+                new Formula("BaSO4",COLOR_SNOW),
+                new Formula("Li3PO4",COLOR_SNOW),
+                new Formula("Li2SiO3",COLOR_SNOW),
+                new Formula("PbSO4",COLOR_SNOW),
+                new Formula("ZnS",COLOR_SNOW),
+                new Formula("AgCl",COLOR_KHAKI),
+                new Formula("PbCl2",COLOR_KHAKI),
+                new Formula("AgBr",COLOR_KHAKI),
+                new Formula("PbBr2",COLOR_KHAKI),
+                new Formula("Ag2CO3",COLOR_KHAKI),
+                new Formula("AgI",COLOR_KHAKI),
+                new Formula("PbI2",COLOR_KHAKI),
+                new Formula("Ag3PO4",COLOR_KHAKI),
+                new Formula("Cu(OH)2",COLOR_DODGERDBLUE),
+                new Formula("CuS",COLOR_DARKSLATEDGREY),
+                new Formula("Ag2S",COLOR_DARKSLATEDGREY),
+                new Formula("PbS",COLOR_DARKSLATEDGREY),
+                new Formula("Fe(OH)2",COLOR_DARKGREEN),
+                new Formula("Ag2O",COLOR_MAROON),
+                new Formula("HgS",COLOR_FIREBRICK),
+                new Formula("MnS",COLOR_BLANCHEDALMOND)};
 
-        for (Formula formula : formulas) {
+        for (Formula formula : sediments) {
             if (A.contains(formula.name)) {
                 return formula.color;
             }
@@ -129,12 +154,21 @@ new Formula("MnS",COLOR_BLANCHEDALMOND)};
 
 
     public int gasColor(String A){
-        Formula[] gases = {new Formula("O2",GAS_COLOR_TRANSPARENT), new Formula("H2", GAS_COLOR_TRANSPARENT), new Formula("CO2", GAS_COLOR_TRANSPARENT),
-new Formula("N2", GAS_COLOR_TRANSPARENT), new Formula("NH3", GAS_COLOR_TRANSPARENT), new Formula("H2S", GAS_COLOR_TRANSPARENT), 
-new Formula("SO2", GAS_COLOR_TRANSPARENT), new Formula("NO", GAS_COLOR_TRANSPARENT), new Formula("N2O", GAS_COLOR_TRANSPARENT), 
-new Formula("NO2", GAS_COLOR_DARKRED), new Formula("Cl2", GAS_COLOR_DARKKHAKI), new Formula("O3", GAS_COLOR_MEDIUMBLUE)};
+        Formula[] gases = {
+                new Formula("O2",GAS_COLOR_TRANSPARENT),
+                new Formula("H2", GAS_COLOR_TRANSPARENT),
+                new Formula("CO2", GAS_COLOR_TRANSPARENT),
+                new Formula("N2", GAS_COLOR_TRANSPARENT),
+                new Formula("NH3", GAS_COLOR_TRANSPARENT),
+                new Formula("H2S", GAS_COLOR_TRANSPARENT),
+                new Formula("SO2", GAS_COLOR_TRANSPARENT),
+                new Formula("NO", GAS_COLOR_TRANSPARENT),
+                new Formula("N2O", GAS_COLOR_TRANSPARENT),
+                new Formula("NO2", GAS_COLOR_DARKRED),
+                new Formula("Cl2", GAS_COLOR_DARKKHAKI),
+                new Formula("O3", GAS_COLOR_MEDIUMBLUE)};
 
-        for (Formula formula : formulas) {
+        for (Formula formula : gases) {
             if (A.contains(formula.name)){
                 return formula.color;
             }

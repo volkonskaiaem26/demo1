@@ -1,10 +1,10 @@
 package com.example.demo1;
 
-public class Eclass {
+public class FormulaParser {
     String A;
     String B;
 
-    Eclass(String text){
+    FormulaParser(String text){
         String[] s1 = text.split("\\+");
         this.A=s1[0];
         this.B=s1[1];

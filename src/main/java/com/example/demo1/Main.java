@@ -9,21 +9,49 @@ public class Main {
     int EL_BIN_H = 5;
     int EL_OXIDE = 6;
     int EL_WATER = 7;
+
+    int[][] TABLE = {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0},
+            {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
+            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0},
+            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0},
+            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 2, 2, 1, 0},
+            {0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0},
+            {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1},
+            {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1},
+            {0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1},
+            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 1}};
+
+    Anions[] ANIONS = {new Anions("NO3", 1), new Anions("F", 1), new Anions("Cl", 1),
+            new Anions("Br", 1), new Anions("I", 1), new Anions("SO3", 2),
+            new Anions("SO4", 2),new Anions("CO3", 2),new Anions("SiO3", 2),
+            new Anions("NO3", 1),new Anions("PO4", 3),new Anions("CrO4", 2)};
+    Kations [] KATIONS = {new Kations("Li", 1),new Kations("NH4", 1),new Kations("K", 1),
+            new Kations("Na", 1),new Kations("Ag", 1),new Kations("Ba", 2),
+            new Kations("Ca", 2),new Kations("Mg", 2),new Kations("Zn", 2),
+            new Kations("Mn", 2),new Kations("Cu", 2),new Kations("Hg", 2),
+            new Kations("Pb", 2), new Kations("Fe", 2),new Kations("Al", 3),
+            new Kations("Cr", 3),new Kations("Bi", 3),new Kations("Sn", 2),
+            new Kations("Sr", 2)};
+
     String A;
     String B;
     
     Main(String a,String b){
         this.A = a;
-        tnis.B = b;
+        this.B = b;
     }
     
     public String reaction(){
         String a = this.A;
         String b = this.B;
         int classA = getClass(a);
-        int classB = getClass(b)
+        int classB = getClass(b);
         String st = "";
-        if (classA == EL_ACISD && classB == EL_ALKALI) {// соль+кислота реакция нейтрализации
+        if (classA == EL_ACID && classB == EL_ALKALI) {// соль+кислота реакция нейтрализации
             String stn1 = Neitralization(a, b);
             st += stn1;
         } else if (classA == EL_ALKALI && classB == EL_ACID) { // аналогично предыдущему, в случае если запись противоположна
@@ -57,7 +85,7 @@ public class Main {
         if (A.contains("OH")) {
             elClass = EL_ALKALI;
         } else {
-            if (a.contains("H")) {
+            if (A.contains("H")) {
                 if (A.contains("H2") && A.length() == 2) {
                     elClass = EL_SIMPLE;
                 } else if (A.indexOf("H") == 0) {
@@ -101,7 +129,7 @@ public class Main {
         String ions = "";
         if (elClass == EL_SIMPLE) {
             ion1 += A;
-        } else if (elClass == EL_ACIS) {
+        } else if (elClass == EL_ACID) {
             int valOfAnion = 1;
             int indexOfAnion = 1;
             if ((int) A.charAt(1) >= 48 && (int) A.charAt(1) <= 57) {
@@ -141,8 +169,8 @@ public class Main {
     public String Neitralization(String A, String B) {
         String product1 = "";
         String product2 = "";
-        String ionsA = getIons(A, k);
-        String ionsB = getIons(B, c);
+        String ionsA = getIons(A);
+        String ionsB = getIons(B);
         String[] AIons = ionsA.split(";");
         String[] BIons = ionsB.split(";");
         int valKat = (int) BIons[1].charAt(0) - 48;
@@ -150,7 +178,7 @@ public class Main {
         Calcval p = new Calcval(valAn,valKat);
         valAn = p.getA();
         valAn = p.getB();
-        String Ap = "";
+        String AProducts = "";
         if (AIons[1].length() == 1) {
             AProducts += AIons[1];
             if (valKat != 1) {
@@ -177,17 +205,17 @@ public class Main {
         return product;
     }
 
-    int TYPE_H_NOTHING = 0;
-    int TYPE_H_METALLS_1 = 1;
-    int TYPE_H_METALLS_2 = 2;
-    int TYPE_H_S = 3;
-    int TYPE_H_N = 4;
-    int TYPE_H_C = 5;
-    int TYPE_H_O = 6;
-    int TYPE_H_HAL = 7;
+    int TYPE_H_NOTHING = 10;
+    int TYPE_H_METALLS_1 = 11;
+    int TYPE_H_METALLS_2 = 12;
+    int TYPE_H_S = 13;
+    int TYPE_H_N = 14;
+    int TYPE_H_C = 15;
+    int TYPE_H_O = 16;
+    int TYPE_H_HAL = 17;
 
     public int getReagentsH(String A) { //определение более точной классификации вещества
-        int typeReagent = TYPE_NOTHING;
+        int typeReagent = TYPE_H_NOTHING;
         if (A.length() == 1) {
             if (A.contains("S")) {
                 typeReagent = TYPE_H_S;
@@ -225,24 +253,24 @@ public class Main {
 
     public String getReactionH(String A) { // реакции для водорода
         String product = "";
-        int classA = getClass(A)
+        int classA = getClass(A);
         if (classA == 1) {
             int typeReagent = getReagentsH(A);
             switch(typeReagent){
-                case TYPE_NOTHING: product += "реакция не идет";
-                case TYPE_METALLS_1: {
+                case 10: product += "реакция не идет";
+                case 11: {
                     product += A;
                     product += "H";
                 }
-                case TYPE_METALLS_2: {
+                case 12: {
                     product += A;
                     product += "H2";
                 }
-                case TYPE_S: product += "H2S";
-                case TYPE_N: product += "NH3";
-                case TYPE_C: product += "CH4";
-                case TYPE_O: product += "H2O";
-                case TYPE_HAL: {
+                case 13: product += "H2S";
+                case 14: product += "NH3";
+                case 15: product += "CH4";
+                case 16: product += "H2O";
+                case 17: {
                     String a1 = "";
                     for (int i = 0; i < (A.length() - 1); i++) {
                         a1 += A.charAt(i);
@@ -265,13 +293,13 @@ public class Main {
         return product;
     }
 
-    int TYPE_O_NOTHING = 0;
-    int TYPE_O_F = 1;
-    int TYPE_O_S = 2;
-    int TYPE_O_SI = 3;
-    int TYPE_O_P = 4;
-    int TYPE_O_N = 5;
-    int TYPE_O_C = 6;
+    int TYPE_O_NOTHING = 20;
+    int TYPE_O_F = 21;
+    int TYPE_O_S = 22;
+    int TYPE_O_SI = 23;
+    int TYPE_O_P = 24;
+    int TYPE_O_N = 25;
+    int TYPE_O_C = 26;
 
     public int getReagentsO(String A) {
         int l = TYPE_O_NOTHING;
@@ -308,22 +336,22 @@ public class Main {
     public String getReactionO(String A) { // реакции для кислорода
         String product = "";
         int classA = getClass(A);
-        if (k == 1) {
+        if (classA == 1) {
             int TypeReagent = getReagentsO(A);
             switch (TypeReagent) {
-                case TYPE_O_NOTHING:
+                case 20:
                     product += "реакция не идет";
-                case TYPE_O_F:
+                case 21:
                     product += "OF2";
-                case TYPE_O_S:
+                case 22:
                     product += "SO2";
-                case TYPE_O_SI:
+                case 23:
                     product += "SiO2";
-                case TYPE_O_P:
+                case 24:
                     product += "P2O5";
-                case TYPE_O_N:
+                case 25:
                     product += "NO2";
-                case TYPE_O_C:
+                case 26:
                     product += "CO2";
             }
         }else {
@@ -344,18 +372,7 @@ public class Main {
         String product1 = "";
         String product2 = "";
         String product = "";
-        int[][] table1 = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0}, {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1}, 
-{0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0}, 
-{0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 2, 2, 1, 0}, {0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0}, 
-{0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1}, 
-{0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1}, 
-{0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1}, {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 
-{0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 1}};
-        Anions[] an = {new Anions("NO3", 1), new Anions("F", 1), new Anions("Cl", 1), new Anions("Br", 1), new Anions("I", 1), new Anions("SO3", 2),
-new Anions("SO4", 2),new Anions("CO3", 2),new Anions("SiO3", 2),new Anions("NO3", 1),new Anions("PO4", 3),new Anions("CrO4", 2)};
-        kations [] kat = {new Kations("Li", 1),new Kations("NH4", 1),new Kations("K", 1),new Kations("Na", 1),new Kations("Ag", 1),new Kations("Ba", 2),
-new Kations("Ca", 2),new Kations("Mg", 2),new Kations("Zn", 2),new Kations("Mn", 2),new Kations("Cu", 2),new Kations("Hg", 2),new Kations("Pb", 2),
-new Kations("Fe", 2),new Kations("Al", 3),new Kations("Cr", 3),new Kations("Bi", 3),new Kations("Sn", 2),new Kations("Sr", 2)};
+
         String kationA = "";
         String anionA = "";
         String kationB = "";
@@ -364,37 +381,37 @@ new Kations("Fe", 2),new Kations("Al", 3),new Kations("Cr", 3),new Kations("Bi",
         int aA = 0;
         int kB = 0;
         int aB = 0;
-        for (int i = 0; i < kat.length; i++) {
-            if (A.contains(kat[i].kation)) {
+        for (int i = 0; i < KATIONS.length; i++) {
+            if (A.contains(KATIONS[i].kation)) {
                 kA = i;
             }
-            if (B.contains(kat[i].kation)) {
+            if (B.contains(KATIONS[i].kation)) {
                 kB = i;
             }
         }
-        for (int i = 0; i < an.length; i++) {
-            if (A.contains(an[i].anion)) {
+        for (int i = 0; i < ANIONS.length; i++) {
+            if (A.contains(ANIONS[i].anion)) {
                 aA = i;
             }
-            if (B.contains(an[i].anion)) {
+            if (B.contains(ANIONS[i].anion)) {
                 aB = i;
             }
         }
-        int ap = table1[aA][kB];
-        int bp = table1[aB][kA];
+        int ap = TABLE[aA][kB];
+        int bp = TABLE[aB][kA];
         int r = 0;
         if (ap + bp > 0) {
             r = 1;
         }
         if (r == 1) {
-            kationA += kat[kA].kation;
-            anionA += an[aA].anion;
-            kationB += kat[kB].kation;
-            anionB += an[aB].anion;
-            int valkA = kat[kA].val;
-            int valaA = an[aA].val;
-            int valkB = kat[kB].val;
-            int valaB = an[aB].val;
+            kationA += KATIONS[kA].kation;
+            anionA += ANIONS[aA].anion;
+            kationB += KATIONS[kB].kation;
+            anionB += ANIONS[aB].anion;
+            int valkA = KATIONS[kA].val;
+            int valaA = ANIONS[aA].val;
+            int valkB = KATIONS[kB].val;
+            int valaB = ANIONS[aB].val;
             product1 += kationA;
             Calcval p1 = new Calcval(valkA,valaB);
             Calcval p2 = new Calcval(valkB,valaA);
