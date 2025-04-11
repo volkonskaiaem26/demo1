@@ -54,26 +54,30 @@ public class Main {
         if (classA == EL_ACID && classB == EL_ALKALI) {// соль+кислота реакция нейтрализации
             String stn1 = Neitralization(a, b);
             st += stn1;
-        } else if (classA == EL_ALKALI && classB == EL_ACID) { // аналогично предыдущему, в случае если запись противоположна
-                String stn2 = Neitralization(b, a);
-                st += stn2;
-        } else if (classA == EL_SIMPLE) { // реакция для водорода и кислорода
+        }
+        if (classA == EL_ALKALI && classB == EL_ACID) { // аналогично предыдущему, в случае если запись противоположна
+            String stn2 = Neitralization(b, a);
+            st += stn2;
+        }
+        if (classA == EL_SIMPLE) { // реакция для водорода и кислорода
             if (a.contains("H2")) { // водород
                 String cs = getReactionH(b);
                 st += cs;
             } else if (a.contains("O2")) { // кислород
-                            String cs = getReactionO(b);
-                            st += cs;
-                        }
-        } else if (classB == EL_SIMPLE) {
-            if (b.contains("H2")) { // аналогично для другого
+                String cs = getReactionO(b);
+                st += cs;
+            }
+        }
+        if (classB == EL_SIMPLE) {
+            if (b.contains("H2")&&!a.contains("O2")) { // аналогично для другого
                 String cs = getReactionH(a);
                 st += cs;
-            } else if (b.contains("O2")) { // аналогично для другого
-                                String cs = getReactionO(a);
-                                st += cs;
-                            }
-        } else if (classA == EL_SALT && classA == EL_SALT) {
+            } else if (b.contains("O2")&&!a.contains("H2")) { // аналогично для другого
+                String cs = getReactionO(a);
+                st += cs;
+            }
+        }
+        if (classA == EL_SALT && classB == EL_SALT) {
             String result = sreaction(a, b);
             st += result;
         }
@@ -254,22 +258,34 @@ public class Main {
     public String getReactionH(String A) { // реакции для водорода
         String product = "";
         int classA = getClass(A);
+        int typeReagent = getReagentsH(A);
         if (classA == 1) {
-            int typeReagent = getReagentsH(A);
             switch(typeReagent){
-                case 10: product += "реакция не идет";
+                case 10:
+                    product += "реакция не идет";
+                break;
                 case 11: {
                     product += A;
                     product += "H";
                 }
+                break;
                 case 12: {
                     product += A;
                     product += "H2";
                 }
-                case 13: product += "H2S";
-                case 14: product += "NH3";
-                case 15: product += "CH4";
-                case 16: product += "H2O";
+                break;
+                case 13:
+                    product += "H2S";
+                break;
+                case 14:
+                    product += "NH3";
+                break;
+                case 15:
+                    product += "CH4";
+                break;
+                case 16:
+                    product += "H2O";
+                break;
                 case 17: {
                     String a1 = "";
                     for (int i = 0; i < (A.length() - 1); i++) {
@@ -278,6 +294,7 @@ public class Main {
                     product += "H";
                     product += a1;
                 }
+                break;
             }
         } else if (classA == 6) {
                 int n = A.indexOf("O");
@@ -341,18 +358,25 @@ public class Main {
             switch (TypeReagent) {
                 case 20:
                     product += "реакция не идет";
+                    break;
                 case 21:
                     product += "OF2";
+                    break;
                 case 22:
                     product += "SO2";
+                    break;
                 case 23:
                     product += "SiO2";
+                    break;
                 case 24:
                     product += "P2O5";
+                    break;
                 case 25:
                     product += "NO2";
+                    break;
                 case 26:
                     product += "CO2";
+                    break;
             }
         }else {
             if (classA == 5) {

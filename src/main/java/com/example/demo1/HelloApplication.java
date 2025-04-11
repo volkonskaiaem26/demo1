@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -7,12 +8,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class HelloApplication extends Application {
@@ -26,11 +30,12 @@ public class HelloApplication extends Application {
     int COLOR_FIREBRICK = 7;
     int COLOR_BLANCHEDALMOND = 8;
 
-    int GAS_COLOR_TRANSPARENT = 1;
-    int GAS_COLOR_DARKRED = 2;
-    int GAS_COLOR_DARKKHAKI = 3;
-    int GAS_COLOR_MEDIUMBLUE = 4;
+    int GAS_COLOR_TRANSPARENT = 11;
+    int GAS_COLOR_DARKRED = 12;
+    int GAS_COLOR_DARKKHAKI = 13;
+    int GAS_COLOR_MEDIUMBLUE = 14;
 
+    double TOP = 125.0d;
 
     @Override
     public void start(Stage stage) throws IOException { //создание окна программы
@@ -68,6 +73,25 @@ public class HelloApplication extends Application {
         group2.setLayoutY(210.0);
         group2.setLayoutX(201.0);
 
+        Circle circle1 = new Circle( 5.0d);
+        circle1.setFill(Color.BLACK);
+        Group groupCircle1 = new Group(circle1);
+        groupCircle1.setLayoutX(210.0);
+        groupCircle1.setLayoutY(250.0);
+
+        Circle circle2 = new Circle(5.0d);
+        circle2.setFill(Color.TRANSPARENT);
+        Group groupCircle2 = new Group(circle2);
+        groupCircle2.setLayoutX(230.0);
+        groupCircle2.setLayoutY(260.0);
+
+        Circle circle3 = new Circle(5.0d);
+        circle3.setFill(Color.TRANSPARENT);
+        Group groupCircle3 = new Group(circle3);
+        groupCircle3.setLayoutX(250.0);
+        groupCircle3.setLayoutY(250.0);
+
+
 
         btn.setOnAction(event -> {
             String text = textField.getText();
@@ -81,6 +105,7 @@ public class HelloApplication extends Application {
                 Main main = new Main(a,b);
                 st += main.reaction();
                 int SedimentColor = getSedimentColor(st);
+                int GasColor = getGasColor(st);
                 switch(SedimentColor){
                     case 1: rectangle2.setFill(Color.SNOW);
                     case 2: rectangle2.setFill(Color.KHAKI);
@@ -91,15 +116,39 @@ public class HelloApplication extends Application {
                     case 7: rectangle2.setFill(Color.FIREBRICK);
                     case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
                 }
+                if(GasColor!=0){
+                    switch(GasColor){
+                        case 12: {
+                            circle1.setFill(Color.DARKRED);
+                            circle2.setFill(Color.DARKRED);
+                            circle3.setFill(Color.DARKRED);
+                        }
+                        break;
+                        case 13: {
+                            circle1.setFill(Color.DARKKHAKI);
+                            circle2.setFill(Color.DARKKHAKI);
+                            circle3.setFill(Color.DARKKHAKI);
+                        }
+                        break;
+                        case 14: {
+                            circle1.setFill(Color.MEDIUMBLUE);
+                            circle2.setFill(Color.MEDIUMBLUE);
+                            circle3.setFill(Color.MEDIUMBLUE);
+                        }
+                    }
+                    getMovement(groupCircle1);
+                    getMovement(groupCircle2);
+                    getMovement(groupCircle3);
+                }
+                st += GasColor;
             }
             if(!isCorrect){
                 st += "реакция не идет";
             }
-
             lbl.setText("Products: " + st);
         });
 
-        Pane root = new Pane(textField, btn, lbl, group, group1, group2);
+        Pane root = new Pane(textField, btn, lbl, group, group1, group2, groupCircle1, groupCircle2, groupCircle3);
         root.setStyle("-fx-background-color: AZURE");
         Scene scene = new Scene(root, 500, 400);
         stage.setScene(scene);
@@ -112,6 +161,14 @@ public class HelloApplication extends Application {
         launch();
     }
 
+    public void getMovement(Group group){
+        TranslateTransition mov = new TranslateTransition(Duration.seconds(4), group);
+        mov.setFromX(group.getLayoutX());
+        mov.setFromY(group.getLayoutY());
+        mov.setToX(group.getLayoutX());
+        mov.setToY(TOP);
+        mov.play();
+    }
 
     public int getSedimentColor(String A) {
 
@@ -153,9 +210,9 @@ public class HelloApplication extends Application {
     }
 
 
-    public int gasColor(String A){
+    public int getGasColor(String A){
         Formula[] gases = {
-                new Formula("O2",GAS_COLOR_TRANSPARENT),
+                new Formula("O2", GAS_COLOR_TRANSPARENT),
                 new Formula("H2", GAS_COLOR_TRANSPARENT),
                 new Formula("CO2", GAS_COLOR_TRANSPARENT),
                 new Formula("N2", GAS_COLOR_TRANSPARENT),
