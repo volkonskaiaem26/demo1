@@ -165,8 +165,8 @@ public class HelloApplication extends Application {
         TranslateTransition mov = new TranslateTransition(Duration.seconds(4), group);
         mov.setFromX(group.getLayoutX());
         mov.setFromY(group.getLayoutY());
-        mov.setToX(group.getLayoutX());
-        mov.setToY(TOP);
+        mov.setToX(0);
+        mov.setToY(25.0);
         mov.play();
     }
 
