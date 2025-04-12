@@ -2,6 +2,7 @@ package com.example.demo1;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,7 +17,6 @@ import javafx.util.Duration;
 
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class HelloApplication extends Application {
@@ -35,7 +35,6 @@ public class HelloApplication extends Application {
     int GAS_COLOR_DARKKHAKI = 13;
     int GAS_COLOR_MEDIUMBLUE = 14;
 
-    double TOP = 125.0d;
 
     @Override
     public void start(Stage stage) throws IOException { //создание окна программы
@@ -74,22 +73,22 @@ public class HelloApplication extends Application {
         group2.setLayoutX(201.0);
 
         Circle circle1 = new Circle( 5.0d);
-        circle1.setFill(Color.BLACK);
+        circle1.setFill(Color.TRANSPARENT);
         Group groupCircle1 = new Group(circle1);
-        groupCircle1.setLayoutX(210.0);
-        groupCircle1.setLayoutY(250.0);
+        groupCircle1.setLayoutX(getRandom(205, 220));
+        groupCircle1.setLayoutY(getRandom(215, 245));
 
         Circle circle2 = new Circle(5.0d);
         circle2.setFill(Color.TRANSPARENT);
         Group groupCircle2 = new Group(circle2);
-        groupCircle2.setLayoutX(230.0);
-        groupCircle2.setLayoutY(260.0);
+        groupCircle2.setLayoutX(getRandom(220, 240));
+        groupCircle2.setLayoutY(getRandom(225, 255));
 
         Circle circle3 = new Circle(5.0d);
         circle3.setFill(Color.TRANSPARENT);
         Group groupCircle3 = new Group(circle3);
-        groupCircle3.setLayoutX(250.0);
-        groupCircle3.setLayoutY(250.0);
+        groupCircle3.setLayoutX(getRandom(240, 255));
+        groupCircle3.setLayoutY(getRandom(215, 245));
 
 
 
@@ -99,9 +98,9 @@ public class HelloApplication extends Application {
             boolean isCorrect = false;
             if(text.contains("+")){
                 isCorrect = true;
-                FormulaParser ec = new FormulaParser(text);
-                String a = ec.getA();
-                String b = ec.getB();
+                FormulaParser formulas1 = new FormulaParser(text);
+                String a = formulas1.getA();
+                String b = formulas1.getB();
                 Main main = new Main(a,b);
                 st += main.reaction();
                 int SedimentColor = getSedimentColor(st);
@@ -117,35 +116,19 @@ public class HelloApplication extends Application {
                     case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
                 }
                 if(GasColor!=0){
-                    switch(GasColor){
-                        case 12: {
-                            circle1.setFill(Color.DARKRED);
-                            circle2.setFill(Color.DARKRED);
-                            circle3.setFill(Color.DARKRED);
-                        }
-                        break;
-                        case 13: {
-                            circle1.setFill(Color.DARKKHAKI);
-                            circle2.setFill(Color.DARKKHAKI);
-                            circle3.setFill(Color.DARKKHAKI);
-                        }
-                        break;
-                        case 14: {
-                            circle1.setFill(Color.MEDIUMBLUE);
-                            circle2.setFill(Color.MEDIUMBLUE);
-                            circle3.setFill(Color.MEDIUMBLUE);
-                        }
+                    setGasColor(circle1, GasColor);
+                    setGasColor(circle2, GasColor);
+                    setGasColor(circle3, GasColor);
                     }
-                    getMovement(groupCircle1);
-                    getMovement(groupCircle2);
-                    getMovement(groupCircle3);
+                    getMovement(groupCircle1,circle1);
+                    getMovement(groupCircle2,circle2);
+                    getMovement(groupCircle3,circle3);
                 }
-                st += GasColor;
-            }
             if(!isCorrect){
                 st += "реакция не идет";
             }
             lbl.setText("Products: " + st);
+
         });
 
         Pane root = new Pane(textField, btn, lbl, group, group1, group2, groupCircle1, groupCircle2, groupCircle3);
@@ -161,14 +144,41 @@ public class HelloApplication extends Application {
         launch();
     }
 
-    public void getMovement(Group group){
-        TranslateTransition mov = new TranslateTransition(Duration.seconds(4), group);
-        mov.setFromX(group.getLayoutX());
-        mov.setFromY(group.getLayoutY());
+    public void getMovement(Group group, Circle circle){
+        double time = getRandom(3,5);
+        TranslateTransition mov = new TranslateTransition(Duration.seconds(time), group);
+        mov.setFromX(0);
+        mov.setFromY(0);
         mov.setToX(0);
-        mov.setToY(25.0);
+        mov.setToY(150.0-group.getLayoutY());
         mov.play();
+        mov.setOnFinished(EventHandler ->
+        {
+            circle.setFill(Color.TRANSPARENT);
+            circle.setStroke(Color.TRANSPARENT);
+        });
     }
+
+    public void setGasColor(Circle circle, int GasColor) {
+        switch (GasColor) {
+            case 11: {
+                circle.setStroke(Color.BLACK);
+            }
+            break;
+            case 12: {
+                circle.setFill(Color.DARKRED);
+            }
+            break;
+            case 13: {
+                circle.setFill(Color.DARKKHAKI);
+            }
+            break;
+            case 14: {
+                circle.setFill(Color.MEDIUMBLUE);
+            }
+        }
+    }
+
 
     public int getSedimentColor(String A) {
 
@@ -226,11 +236,16 @@ public class HelloApplication extends Application {
                 new Formula("O3", GAS_COLOR_MEDIUMBLUE)};
 
         for (Formula formula : gases) {
-            if (A.contains(formula.name)){
+            if (A.contains(formula.name)&& A.length() == formula.name.length()){
                 return formula.color;
             }
         }
         return 0;
+    }
+
+    public double getRandom(int min, int max){
+        double random = (Math.random()*(max-min))+min;
+        return random;
     }
 }
 
