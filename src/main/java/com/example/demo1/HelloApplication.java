@@ -179,10 +179,36 @@ public class HelloApplication extends Application {
         }
     }
 
+int[][] TABLE = {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0},
+            {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
+            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0},
+            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0},
+            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 2, 2, 1, 0},
+            {0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0},
+            {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1},
+            {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1},
+            {0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1},
+            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 1}};
 
-    public int getSedimentColor(String A) {
+Formula[] GASES = {
+                new Formula("O2", GAS_COLOR_TRANSPARENT),
+                new Formula("H2", GAS_COLOR_TRANSPARENT),
+                new Formula("CO2", GAS_COLOR_TRANSPARENT),
+                new Formula("N2", GAS_COLOR_TRANSPARENT),
+                new Formula("NH3", GAS_COLOR_TRANSPARENT),
+                new Formula("H2S", GAS_COLOR_TRANSPARENT),
+                new Formula("SO2", GAS_COLOR_TRANSPARENT),
+                new Formula("NO", GAS_COLOR_TRANSPARENT),
+                new Formula("N2O", GAS_COLOR_TRANSPARENT),
+                new Formula("NO2", GAS_COLOR_DARKRED),
+                new Formula("Cl2", GAS_COLOR_DARKKHAKI),
+                new Formula("O3", GAS_COLOR_MEDIUMBLUE)};
 
-        Formula[] sediments = {
+Formula[] SEDIMENTS = {
                 new Formula("CaC03",COLOR_SNOW),
                 new Formula("BaC03",COLOR_SNOW),
                 new Formula("MgC03",COLOR_SNOW),
@@ -211,7 +237,11 @@ public class HelloApplication extends Application {
                 new Formula("HgS",COLOR_FIREBRICK),
                 new Formula("MnS",COLOR_BLANCHEDALMOND)};
 
-        for (Formula formula : sediments) {
+Formula[] FLUID = {};
+
+    public int getSedimentColor(String A) {
+
+        for (Formula formula : SEDIMENTS) {
             if (A.contains(formula.name)) {
                 return formula.color;
             }
@@ -221,21 +251,8 @@ public class HelloApplication extends Application {
 
 
     public int getGasColor(String A){
-        Formula[] gases = {
-                new Formula("O2", GAS_COLOR_TRANSPARENT),
-                new Formula("H2", GAS_COLOR_TRANSPARENT),
-                new Formula("CO2", GAS_COLOR_TRANSPARENT),
-                new Formula("N2", GAS_COLOR_TRANSPARENT),
-                new Formula("NH3", GAS_COLOR_TRANSPARENT),
-                new Formula("H2S", GAS_COLOR_TRANSPARENT),
-                new Formula("SO2", GAS_COLOR_TRANSPARENT),
-                new Formula("NO", GAS_COLOR_TRANSPARENT),
-                new Formula("N2O", GAS_COLOR_TRANSPARENT),
-                new Formula("NO2", GAS_COLOR_DARKRED),
-                new Formula("Cl2", GAS_COLOR_DARKKHAKI),
-                new Formula("O3", GAS_COLOR_MEDIUMBLUE)};
-
-        for (Formula formula : gases) {
+        
+        for (Formula formula : GASES) {
             if (A.contains(formula.name)&& A.length() == formula.name.length()){
                 return formula.color;
             }
@@ -243,8 +260,15 @@ public class HelloApplication extends Application {
         return 0;
     }
 
-    public int getFluidColor {
-       
+    public int getFluidColor(String A) {
+ 
+        String fluid = "";
+        for (Formula formula : SEDIMENTS) {
+            if (A.contains(formula.name)) {
+                fluid = A.replace(formula.name, "");
+            }
+        }
+
     }
 
     public double getRandom(int min, int max){
