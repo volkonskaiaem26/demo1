@@ -35,6 +35,10 @@ public class HelloApplication extends Application {
     int GAS_COLOR_DARKKHAKI = 13;
     int GAS_COLOR_MEDIUMBLUE = 14;
 
+    int FLUID_COLOR_GOLD = 21;
+    int FLUID_COLOR_MITSTYROSE = 22;
+    int FLUID_COLOR_SKYBLUE = 23;
+    int FLUID_COLOR_OLIVEDRAB = 24;
 
     @Override
     public void start(Stage stage) throws IOException { //создание окна программы
@@ -237,7 +241,12 @@ Formula[] SEDIMENTS = {
                 new Formula("HgS",COLOR_FIREBRICK),
                 new Formula("MnS",COLOR_BLANCHEDALMOND)};
 
-Formula[] FLUID = {};
+Formula[] FLUID = {
+                new Formula("CrO4", FLUID_COLOR_GOLD)
+                new Formula("Mn", FLUID_COLOR_MISTYROSE)
+                new Formula("Cu", FLUID_COLOR_SKYBLUE)
+                new Formula("Fe", FLUID_COLOR_OLIVEDRAB)
+                new Formula("Cr", FLUID_COLOR_OLIVEDRAB)};
 
     public int getSedimentColor(String A) {
 
@@ -269,6 +278,12 @@ Formula[] FLUID = {};
             }
         }
 
+        for ( Formula formula : FLUID){
+            if (A.contains(formula.name)) {
+                return formula.color;
+            }
+        }
+       return 0;
     }
 
     public double getRandom(int min, int max){
