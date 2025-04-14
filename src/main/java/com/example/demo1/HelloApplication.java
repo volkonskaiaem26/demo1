@@ -110,16 +110,6 @@ public class HelloApplication extends Application {
                 int SedimentColor = getSedimentColor(st);
                 int GasColor = getGasColor(st);
                 int FluidColor = getFluidColor(st);
-                switch(SedimentColor){
-                    case 1: rectangle2.setFill(Color.SNOW);
-                    case 2: rectangle2.setFill(Color.KHAKI);
-                    case 3: rectangle2.setFill(Color.DODGERBLUE);
-                    case 4: rectangle2.setFill(Color.DARKSLATEGREY);
-                    case 5: rectangle2.setFill(Color.DARKGREEN);
-                    case 6: rectangle2.setFill(Color.MAROON);
-                    case 7: rectangle2.setFill(Color.FIREBRICK);
-                    case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
-                }
                 switch(FluidColor){
                     case 21: {
                          rectangle1.setFill(Color.GOLD);
@@ -135,8 +125,20 @@ public class HelloApplication extends Application {
                     }
                     case 24: {
                          rectangle1.setFill(Color.OLIVEDRAB);
+                         rectangle2.setFill(Color.OLIVEDRAB);
                     }
                 }
+                switch(SedimentColor){
+                    case 1: rectangle2.setFill(Color.SNOW);
+                    case 2: rectangle2.setFill(Color.KHAKI);
+                    case 3: rectangle2.setFill(Color.DODGERBLUE);
+                    case 4: rectangle2.setFill(Color.DARKSLATEGREY);
+                    case 5: rectangle2.setFill(Color.DARKGREEN);
+                    case 6: rectangle2.setFill(Color.MAROON);
+                    case 7: rectangle2.setFill(Color.FIREBRICK);
+                    case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
+                }
+                
                 if(GasColor!=0){
                     setGasColor(circle1, GasColor);
                     setGasColor(circle2, GasColor);
