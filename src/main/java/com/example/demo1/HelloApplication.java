@@ -109,6 +109,7 @@ public class HelloApplication extends Application {
                 st += main.reaction();
                 int SedimentColor = getSedimentColor(st);
                 int GasColor = getGasColor(st);
+                int FluidColor = getFluidColor(st);
                 switch(SedimentColor){
                     case 1: rectangle2.setFill(Color.SNOW);
                     case 2: rectangle2.setFill(Color.KHAKI);
@@ -118,6 +119,23 @@ public class HelloApplication extends Application {
                     case 6: rectangle2.setFill(Color.MAROON);
                     case 7: rectangle2.setFill(Color.FIREBRICK);
                     case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
+                }
+                switch(FluidColor){
+                    case 21: {
+                         rectangle1.setFill(Color.GOLD);
+                         rectangle2.setFill(Color.GOLD);
+                    }
+                    case 22: {
+                         rectangle1.setFill(Color.MISTYROSE);
+                         rectangle2.setFill(Color.MISTYROSE);
+                    }
+                    case 23: {
+                         rectangle1.setFill(Color.SKYBLUE);
+                         rectangle2.setFill(Color.SKYBLUE);
+                    }
+                    case 24: {
+                         rectangle1.setFill(Color.OLIVEDRAB);
+                    }
                 }
                 if(GasColor!=0){
                     setGasColor(circle1, GasColor);
@@ -182,6 +200,7 @@ public class HelloApplication extends Application {
             }
         }
     }
+    
 
 int[][] TABLE = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0},
@@ -279,7 +298,7 @@ Formula[] FLUID = {
         }
 
         for ( Formula formula : FLUID){
-            if (A.contains(formula.name)) {
+            if (fluid.contains(formula.name)) {
                 return formula.color;
             }
         }
