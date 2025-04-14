@@ -203,7 +203,7 @@ public class Main {
         int valAn = (int) AIons[0].charAt(0) - 48;
         Calcval p = new Calcval(valAn,valKat);
         valAn = p.getA();
-        valAn = p.getB();
+        valKat = p.getB();
         String AProducts = "";
         if (AIons[1].length() == 1) {
             AProducts += AIons[1];
