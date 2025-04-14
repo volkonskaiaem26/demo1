@@ -25,16 +25,38 @@ public class Main {
             {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 1}};
 
-    Anions[] ANIONS = {new Anions("NO3", 1), new Anions("F", 1), new Anions("Cl", 1),
-            new Anions("Br", 1), new Anions("I", 1), new Anions("SO3", 2),
-            new Anions("SO4", 2),new Anions("CO3", 2),new Anions("SiO3", 2),
-            new Anions("NO3", 1),new Anions("PO4", 3),new Anions("CrO4", 2)};
-    Kations [] KATIONS = {new Kations("Li", 1),new Kations("NH4", 1),new Kations("K", 1),
-            new Kations("Na", 1),new Kations("Ag", 1),new Kations("Ba", 2),
-            new Kations("Ca", 2),new Kations("Mg", 2),new Kations("Zn", 2),
-            new Kations("Mn", 2),new Kations("Cu", 2),new Kations("Hg", 2),
-            new Kations("Pb", 2), new Kations("Fe", 2),new Kations("Al", 3),
-            new Kations("Cr", 3),new Kations("Bi", 3),new Kations("Sn", 2),
+    Anions[] ANIONS = {
+            new Anions("NO3", 1), 
+            new Anions("F", 1), 
+            new Anions("Cl", 1),         
+            new Anions("Br", 1), 
+            new Anions("I", 1), 
+            new Anions("SO3", 2),
+            new Anions("SO4", 2),
+            new Anions("CO3", 2),
+            new Anions("SiO3", 2),
+            new Anions("NO3", 1),
+            new Anions("PO4", 3),
+            new Anions("CrO4", 2)};
+    Kations [] KATIONS = {
+            new Kations("Li", 1),
+            new Kations("NH4", 1),
+            new Kations("K", 1),
+            new Kations("Na", 1),
+            new Kations("Ag", 1),
+            new Kations("Ba", 2),
+            new Kations("Ca", 2),
+            new Kations("Mg", 2),
+            new Kations("Zn", 2),
+            new Kations("Mn", 2),
+            new Kations("Cu", 2),
+            new Kations("Hg", 2),
+            new Kations("Pb", 2), 
+            new Kations("Fe", 2),
+            new Kations("Al", 3),
+            new Kations("Cr", 3),
+            new Kations("Bi", 3),
+            new Kations("Sn", 2),
             new Kations("Sr", 2)};
 
     String A;
