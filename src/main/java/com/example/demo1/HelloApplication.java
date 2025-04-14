@@ -243,6 +243,10 @@ public class HelloApplication extends Application {
         return 0;
     }
 
+    public int getFluidColor {
+       
+    }
+
     public double getRandom(int min, int max){
         double random = (Math.random()*(max-min))+min;
         return random;
