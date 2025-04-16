@@ -2,7 +2,6 @@ package com.example.demo1;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,7 +35,7 @@ public class HelloApplication extends Application {
     int GAS_COLOR_MEDIUMBLUE = 14;
 
     int FLUID_COLOR_GOLD = 21;
-    int FLUID_COLOR_MITSTYROSE = 22;
+    int FLUID_COLOR_MISTYROSE = 22;
     int FLUID_COLOR_SKYBLUE = 23;
     int FLUID_COLOR_OLIVEDRAB = 24;
 
@@ -55,25 +54,25 @@ public class HelloApplication extends Application {
         btn.setLayoutY(60.0);
         btn.setLayoutX(207.0);
 
-        Rectangle rectangle = new Rectangle(60.0d, 120.0d);//центральная колба
+        Rectangle rectangle = new Rectangle(60.0d, 140.0d);//центральная колба
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
         Group group = new Group(rectangle);
         group.setLayoutY(150.0);
         group.setLayoutX(200.0);
 
-        Rectangle rectangle1 = new Rectangle(58.0d, 59.0d);//верхняя половина(раствор)
+        Rectangle rectangle1 = new Rectangle(58.0d, 60.0d);//верхняя половина(раствор)
         rectangle1.setFill(Color.TRANSPARENT);
         rectangle1.setStroke(Color.TRANSPARENT);
         Group group1 = new Group(rectangle1);
-        group1.setLayoutY(151.0);
+        group1.setLayoutY(170.0);
         group1.setLayoutX(201.0);
 
         Rectangle rectangle2 = new Rectangle(58.0d, 59.0d);//нижняя половина(осадок)
         rectangle2.setFill(Color.TRANSPARENT);
         rectangle2.setStroke(Color.TRANSPARENT);
         Group group2 = new Group(rectangle2);
-        group2.setLayoutY(210.0);
+        group2.setLayoutY(230.0);
         group2.setLayoutX(201.0);
 
         Circle circle1 = new Circle( 5.0d);
@@ -94,8 +93,6 @@ public class HelloApplication extends Application {
         groupCircle3.setLayoutX(getRandom(240, 255));
         groupCircle3.setLayoutY(getRandom(215, 245));
 
-
-
         btn.setOnAction(event -> {
             String text = textField.getText();
             String st = "";
@@ -110,35 +107,9 @@ public class HelloApplication extends Application {
                 int SedimentColor = getSedimentColor(st);
                 int GasColor = getGasColor(st);
                 int FluidColor = getFluidColor(st);
-                switch(FluidColor){
-                    case 21: {
-                         rectangle1.setFill(Color.GOLD);
-                         rectangle2.setFill(Color.GOLD);
-                    }
-                    case 22: {
-                         rectangle1.setFill(Color.MISTYROSE);
-                         rectangle2.setFill(Color.MISTYROSE);
-                    }
-                    case 23: {
-                         rectangle1.setFill(Color.SKYBLUE);
-                         rectangle2.setFill(Color.SKYBLUE);
-                    }
-                    case 24: {
-                         rectangle1.setFill(Color.OLIVEDRAB);
-                         rectangle2.setFill(Color.OLIVEDRAB);
-                    }
-                }
-                switch(SedimentColor){
-                    case 1: rectangle2.setFill(Color.SNOW);
-                    case 2: rectangle2.setFill(Color.KHAKI);
-                    case 3: rectangle2.setFill(Color.DODGERBLUE);
-                    case 4: rectangle2.setFill(Color.DARKSLATEGREY);
-                    case 5: rectangle2.setFill(Color.DARKGREEN);
-                    case 6: rectangle2.setFill(Color.MAROON);
-                    case 7: rectangle2.setFill(Color.FIREBRICK);
-                    case 8: rectangle2.setFill(Color.BLANCHEDALMOND);
-                }
-                
+                setFluidColor(rectangle1, FluidColor);
+                setFluidColor(rectangle2, FluidColor);
+                setSedimentColor(rectangle2, SedimentColor);
                 if(GasColor!=0){
                     setGasColor(circle1, GasColor);
                     setGasColor(circle2, GasColor);
@@ -174,7 +145,7 @@ public class HelloApplication extends Application {
         mov.setFromX(0);
         mov.setFromY(0);
         mov.setToX(0);
-        mov.setToY(150.0-group.getLayoutY());
+        mov.setToY(170.0-group.getLayoutY());
         mov.play();
         mov.setOnFinished(EventHandler ->
         {
@@ -202,22 +173,40 @@ public class HelloApplication extends Application {
             }
         }
     }
-    
 
-int[][] TABLE = {
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0},
-            {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 2, 2, 1, 0},
-            {0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0},
-            {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1},
-            {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1},
-            {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1},
-            {0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1},
-            {0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1},
-            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 1}};
+    public void setFluidColor(Rectangle rectangle, int FluidColor){
+        switch(FluidColor){
+            case 21: {
+                rectangle.setFill(Color.GOLD);
+            }
+            break;
+            case 22: {
+                rectangle.setFill(Color.MISTYROSE);
+            }
+            break;
+            case 23: {
+                rectangle.setFill(Color.SKYBLUE);
+            }
+            break;
+            case 24: {
+                rectangle.setFill(Color.OLIVEDRAB);
+            }
+            break;
+        }
+    }
+
+    public void setSedimentColor(Rectangle rectangle, int SedimentColor){
+        switch(SedimentColor){
+            case 1: rectangle.setFill(Color.SNOW);
+            case 2: rectangle.setFill(Color.KHAKI);
+            case 3: rectangle.setFill(Color.DODGERBLUE);
+            case 4: rectangle.setFill(Color.DARKSLATEGREY);
+            case 5: rectangle.setFill(Color.DARKGREEN);
+            case 6: rectangle.setFill(Color.MAROON);
+            case 7: rectangle.setFill(Color.FIREBRICK);
+            case 8: rectangle.setFill(Color.BLANCHEDALMOND);
+        }
+    }
 
 Formula[] GASES = {
                 new Formula("O2", GAS_COLOR_TRANSPARENT),
@@ -263,14 +252,13 @@ Formula[] SEDIMENTS = {
                 new Formula("MnS",COLOR_BLANCHEDALMOND)};
 
 Formula[] FLUID = {
-                new Formula("CrO4", FLUID_COLOR_GOLD)
-                new Formula("Mn", FLUID_COLOR_MISTYROSE)
-                new Formula("Cu", FLUID_COLOR_SKYBLUE)
-                new Formula("Fe", FLUID_COLOR_OLIVEDRAB)
+                new Formula("CrO4", FLUID_COLOR_GOLD),
+                new Formula("Mn", FLUID_COLOR_MISTYROSE),
+                new Formula("Cu", FLUID_COLOR_SKYBLUE),
+                new Formula("Fe", FLUID_COLOR_OLIVEDRAB),
                 new Formula("Cr", FLUID_COLOR_OLIVEDRAB)};
 
     public int getSedimentColor(String A) {
-
         for (Formula formula : SEDIMENTS) {
             if (A.contains(formula.name)) {
                 return formula.color;
@@ -281,7 +269,6 @@ Formula[] FLUID = {
 
 
     public int getGasColor(String A){
-        
         for (Formula formula : GASES) {
             if (A.contains(formula.name)&& A.length() == formula.name.length()){
                 return formula.color;
@@ -291,14 +278,12 @@ Formula[] FLUID = {
     }
 
     public int getFluidColor(String A) {
- 
         String fluid = "";
         for (Formula formula : SEDIMENTS) {
             if (A.contains(formula.name)) {
                 fluid = A.replace(formula.name, "");
             }
         }
-
         for ( Formula formula : FLUID){
             if (fluid.contains(formula.name)) {
                 return formula.color;
