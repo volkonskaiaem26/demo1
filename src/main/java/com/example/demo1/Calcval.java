@@ -6,12 +6,12 @@ public class Calcval {
 
     Calcval(int a, int b){
         if(a%b==0){
-            b = 1;
             a = a/b;
+            b = 1;
         }else{
             if(b%a==0){
-                a =1;
                 b = b/a;
+                a = 1;
             }
         }
         this.A = a;
