@@ -65,7 +65,7 @@ public class HelloApplication extends Application {
         rectangle1.setFill(Color.TRANSPARENT);
         rectangle1.setStroke(Color.TRANSPARENT);
         Group group1 = new Group(rectangle1);
-        group1.setLayoutY(150.0);
+        group1.setLayoutY(151.0);
         group1.setLayoutX(201.0);
 
         Rectangle rectangle2 = new Rectangle(58.0d, 59.0d);//нижняя половина(осадок)
@@ -208,6 +208,7 @@ public class HelloApplication extends Application {
         }
     }
 
+
 Formula[] GASES = {
                 new Formula("O2", GAS_COLOR_TRANSPARENT),
                 new Formula("H2", GAS_COLOR_TRANSPARENT),
@@ -258,6 +259,7 @@ Formula[] FLUID = {
                 new Formula("Fe", FLUID_COLOR_OLIVEDRAB),
                 new Formula("Cr", FLUID_COLOR_OLIVEDRAB)};
 
+
     public int getSedimentColor(String A) {
         for (Formula formula : SEDIMENTS) {
             if (A.contains(formula.name)) {
@@ -266,7 +268,6 @@ Formula[] FLUID = {
         }
         return 0;
     }
-
 
     public int getGasColor(String A){
         for (Formula formula : GASES) {
