@@ -54,25 +54,25 @@ public class HelloApplication extends Application {
         btn.setLayoutY(60.0);
         btn.setLayoutX(207.0);
 
-        Rectangle rectangle = new Rectangle(60.0d, 140.0d);//центральная колба
+        Rectangle rectangle = new Rectangle(60.0d, 120.0d);//центральная колба
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
         Group group = new Group(rectangle);
         group.setLayoutY(150.0);
         group.setLayoutX(200.0);
 
-        Rectangle rectangle1 = new Rectangle(58.0d, 60.0d);//верхняя половина(раствор)
+        Rectangle rectangle1 = new Rectangle(58.0d, 59.0d);//верхняя половина(раствор)
         rectangle1.setFill(Color.TRANSPARENT);
         rectangle1.setStroke(Color.TRANSPARENT);
         Group group1 = new Group(rectangle1);
-        group1.setLayoutY(170.0);
+        group1.setLayoutY(150.0);
         group1.setLayoutX(201.0);
 
         Rectangle rectangle2 = new Rectangle(58.0d, 59.0d);//нижняя половина(осадок)
         rectangle2.setFill(Color.TRANSPARENT);
         rectangle2.setStroke(Color.TRANSPARENT);
         Group group2 = new Group(rectangle2);
-        group2.setLayoutY(230.0);
+        group2.setLayoutY(210.0);
         group2.setLayoutX(201.0);
 
         Circle circle1 = new Circle( 5.0d);
@@ -145,7 +145,7 @@ public class HelloApplication extends Application {
         mov.setFromX(0);
         mov.setFromY(0);
         mov.setToX(0);
-        mov.setToY(170.0-group.getLayoutY());
+        mov.setToY(150.0-group.getLayoutY());
         mov.play();
         mov.setOnFinished(EventHandler ->
         {
