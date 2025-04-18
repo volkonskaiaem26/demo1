@@ -1,5 +1,7 @@
 package com.example.demo1;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -154,6 +156,16 @@ public class HelloApplication extends Application {
         });
     }
 
+    public void setNewColor(Rectangle rectangle, Color color){
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        KeyFrame key = new KeyFrame(Duration.seconds(2), event -> {
+            rectangle.setFill(color);
+        });
+        timeline.getKeyFrames().add(key);
+        timeline.play();
+    }
+
     public void setGasColor(Circle circle, int GasColor) {
         switch (GasColor) {
             case 11: {
@@ -197,14 +209,14 @@ public class HelloApplication extends Application {
 
     public void setSedimentColor(Rectangle rectangle, int SedimentColor){
         switch(SedimentColor){
-            case 1: rectangle.setFill(Color.SNOW);
-            case 2: rectangle.setFill(Color.KHAKI);
-            case 3: rectangle.setFill(Color.DODGERBLUE);
-            case 4: rectangle.setFill(Color.DARKSLATEGREY);
-            case 5: rectangle.setFill(Color.DARKGREEN);
-            case 6: rectangle.setFill(Color.MAROON);
-            case 7: rectangle.setFill(Color.FIREBRICK);
-            case 8: rectangle.setFill(Color.BLANCHEDALMOND);
+            case 1: setNewColor(rectangle, Color.SNOW);
+            case 2: setNewColor(rectangle, Color.KHAKI);
+            case 3: setNewColor(rectangle, Color.DODGERBLUE);
+            case 4: setNewColor(rectangle, Color.DARKSLATEGREY);
+            case 5: setNewColor(rectangle, Color.DARKGREEN);
+            case 6: setNewColor(rectangle, Color.MAROON);
+            case 7: setNewColor(rectangle, Color.FIREBRICK);
+            case 8: setNewColor(rectangle, Color.BLANCHEDALMOND);
         }
     }
 
