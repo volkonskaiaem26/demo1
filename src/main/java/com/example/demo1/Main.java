@@ -73,15 +73,18 @@ public class Main {
         int classA = getClass(a);
         int classB = getClass(b);
         String st = "";
-        if (classA == EL_ACID && classB == EL_ALKALI) {// соль+кислота реакция нейтрализации
+
+        if (classA == EL_ACID && classB == EL_ALKALI) {
             String stn1 = Neitralization(a, b);
             st += stn1;
         }
-        if (classA == EL_ALKALI && classB == EL_ACID) { // аналогично предыдущему, в случае если запись противоположна
+
+        if (classA == EL_ALKALI && classB == EL_ACID) {
             String stn2 = Neitralization(b, a);
             st += stn2;
         }
-        if (classA == EL_SIMPLE) { // реакция для водорода и кислорода
+
+        if (classA == EL_SIMPLE) {
             if (a.contains("H2")) { // водород
                 String cs = getReactionH(b);
                 st += cs;
@@ -90,15 +93,17 @@ public class Main {
                 st += cs;
             }
         }
+
         if (classB == EL_SIMPLE) {
-            if (b.contains("H2")&&!a.contains("O2")) { // аналогично для другого
+            if (b.contains("H2")&&!a.contains("O2")) {
                 String cs = getReactionH(a);
                 st += cs;
-            } else if (b.contains("O2")&&!a.contains("H2")) { // аналогично для другого
+            } else if (b.contains("O2")&&!a.contains("H2")) {
                 String cs = getReactionO(a);
                 st += cs;
             }
         }
+
         if (classA == EL_SALT && classB == EL_SALT) {
             String result = sreaction(a, b);
             st += result;
@@ -148,7 +153,7 @@ public class Main {
         return elClass;
     }
 
-    public String getIons(String A) { // разделение вещества на ионы (пока лишь для простых веществ, кислот и оснований).
+    public String getIons(String A) { // разделение вещества на ионы
         int elClass = getClass(A);
         String ion1 = "";
         String ion2 = "";

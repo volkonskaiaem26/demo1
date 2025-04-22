@@ -43,40 +43,48 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage){ //создание окна программы
-        Label lbl = new Label();//вывод
+
+        //вывод
+        Label lbl = new Label();
         lbl.setLayoutY(300.0);
         lbl.setLayoutX(180.0);
 
-        TextField textField = new TextField();//ввод
+        //ввод
+        TextField textField = new TextField();
         textField.setPrefColumnCount(25);
         textField.setLayoutY(20.0);
         textField.setLayoutX(100.0);
 
-        Button btn = new Button("Start");//начало работы
+        //начало работы
+        Button btn = new Button("Start");
         btn.setLayoutY(60.0);
         btn.setLayoutX(207.0);
 
-        Rectangle rectangle = new Rectangle(60.0d, 120.0d);//центральная колба
+        //центральная колба
+        Rectangle rectangle = new Rectangle(60.0d, 120.0d);
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
         Group group = new Group(rectangle);
         group.setLayoutY(150.0);
         group.setLayoutX(200.0);
 
-        Rectangle rectangle1 = new Rectangle(58.0d, 59.0d);//верхняя половина(раствор)
+        //верхняя половина(раствор)
+        Rectangle rectangle1 = new Rectangle(58.0d, 59.0d);
         rectangle1.setFill(Color.TRANSPARENT);
         rectangle1.setStroke(Color.TRANSPARENT);
         Group group1 = new Group(rectangle1);
         group1.setLayoutY(151.0);
         group1.setLayoutX(201.0);
 
-        Rectangle rectangle2 = new Rectangle(58.0d, 59.0d);//нижняя половина(осадок)
+        //нижняя половина(осадок)
+        Rectangle rectangle2 = new Rectangle(58.0d, 59.0d);
         rectangle2.setFill(Color.TRANSPARENT);
         rectangle2.setStroke(Color.TRANSPARENT);
         Group group2 = new Group(rectangle2);
         group2.setLayoutY(210.0);
         group2.setLayoutX(201.0);
 
+        //газ
         Circle circle1 = new Circle( 5.0d);
         circle1.setFill(Color.TRANSPARENT);
         Group groupCircle1 = new Group(circle1);
@@ -95,6 +103,7 @@ public class HelloApplication extends Application {
         groupCircle3.setLayoutX(getRandom(240, 255));
         groupCircle3.setLayoutY(getRandom(215, 245));
 
+        //проведение реакции
         btn.setOnAction(event -> {
             String text = textField.getText();
             String st = "";
@@ -141,6 +150,7 @@ public class HelloApplication extends Application {
         launch();
     }
 
+    //движение газа
     public void getMovement(Group group, Circle circle){
         double time = getRandom(3,5);
         TranslateTransition mov = new TranslateTransition(Duration.seconds(time), group);
@@ -156,6 +166,7 @@ public class HelloApplication extends Application {
         });
     }
 
+    //изменение цветов
     public void setNewColor(Rectangle rectangle, Color color){
         Timeline timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
