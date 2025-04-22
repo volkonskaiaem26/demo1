@@ -17,8 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
 
-import java.io.IOException;
-
 
 public class HelloApplication extends Application {
 
