@@ -42,7 +42,7 @@ public class HelloApplication extends Application {
     int FLUID_COLOR_OLIVEDRAB = 24;
 
     @Override
-    public void start(Stage stage) throws IOException { //создание окна программы
+    public void start(Stage stage){ //создание окна программы
         Label lbl = new Label();//вывод
         lbl.setLayoutY(300.0);
         lbl.setLayoutX(180.0);
