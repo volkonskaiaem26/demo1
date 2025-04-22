@@ -306,8 +306,7 @@ Formula[] FLUID = {
     }
 
     public double getRandom(int min, int max){
-        double random = (Math.random()*(max-min))+min;
-        return random;
+        return (Math.random()*(max-min))+min;
     }
 }
 
