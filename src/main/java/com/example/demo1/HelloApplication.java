@@ -38,6 +38,7 @@ public class HelloApplication extends Application {
     int FLUID_COLOR_MISTYROSE = 22;
     int FLUID_COLOR_SKYBLUE = 23;
     int FLUID_COLOR_OLIVEDRAB = 24;
+    int FLUID_COLOR_PALEGREEN  = 25;
 
     @Override
     public void start(Stage stage){ //создание окна программы
@@ -274,11 +275,12 @@ Formula[] SEDIMENTS = {
                 new Formula("MnS",COLOR_BLANCHEDALMOND)};
 
 Formula[] FLUID = {
-                new Formula("CrO4", FLUID_COLOR_GOLD),
-                new Formula("Mn", FLUID_COLOR_MISTYROSE),
-                new Formula("Cu", FLUID_COLOR_SKYBLUE),
-                new Formula("Fe", FLUID_COLOR_OLIVEDRAB),
-                new Formula("Cr", FLUID_COLOR_OLIVEDRAB)};
+        new Formula("CrO4", FLUID_COLOR_GOLD),
+        new Formula("Mn", FLUID_COLOR_MISTYROSE),
+        new Formula("Cu", FLUID_COLOR_SKYBLUE),
+        new Formula("Fe", FLUID_COLOR_OLIVEDRAB),
+        new Formula("Cr", FLUID_COLOR_OLIVEDRAB),
+        new Formula("Ni", FLUID_COLOR_PALEGREEN)};
 
 
     public int getSedimentColor(String A) {
